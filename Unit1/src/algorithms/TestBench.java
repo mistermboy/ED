@@ -11,12 +11,11 @@ public class TestBench {
 
 	public static void main(String[] args) {
 		TestBench t = new TestBench();
-		//t.testLinear("SalidaLinear.csv",0,10,5);
-		//t.testQuadratic("SalidaQuadratic.csv",0,10,5);
-		//t.testCubic("SalidaCubic.csv", 0, 5, 5);
+		t.testLinear("SalidaLinear.csv", 0, 10, 5);
+		t.testQuadratic("SalidaQuadratic.csv", 0, 10, 5);
+		t.testCubic("SalidaCubic.csv", 0, 5, 5);
 		t.testLogaritmic("SalidaLogaritmic", 0, 20, 5);
 	}
-	
 
 	
 	/**
