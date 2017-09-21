@@ -16,7 +16,7 @@ public class TestBench {
 		t.testLogaritmic("SalidaLogaritmic", 0, 5, 5);
 	}
 	
-	// puto mono eres un payaso.
+	// TUS MUUUELAS
 
 	
 	/**
