@@ -1,3 +1,4 @@
+package algorithms;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Locale;
@@ -13,7 +14,7 @@ public class TestBench {
 		//t.testLinear("SalidaLinear.csv",0,10,5);
 		//t.testQuadratic("SalidaQuadratic.csv",0,10,5);
 		//t.testCubic("SalidaCubic.csv", 0, 5, 5);
-		t.testLogaritmic("SalidaLogaritmic", 0, 5, 5);
+		t.testLogaritmic("SalidaLogaritmic", 0, 20, 5);
 	}
 	
 
@@ -75,8 +76,7 @@ public class TestBench {
 	  * @param n, número de veces que se repite el algoritmo, de tipo int
 	  */
 	public static void logarithm(int n) {
-
-		for (long i = 0; i <= n; i = i *= 2) {
+		for (int i = 1; i <= n; i*=2) {
 			doNothing();
 		}
 
@@ -91,7 +91,7 @@ public class TestBench {
 	public static long pow2iter(int n) {
 		long total = 1;
 		if (n > 0)
-			for (long i = 0; i < n; i++) {
+			for (int i = 0; i < n; i++) {
 				doNothing();
 				total = total * 2;
 			}
@@ -259,7 +259,7 @@ public class TestBench {
 			for (int i = startN; i <= endN; i++) {
 				initTime = System.currentTimeMillis();
 				for (int nVeces = 1; nVeces < times; nVeces++) {
-					cubic(i);
+					logarithm(i);
 				}
 				finalTime = System.currentTimeMillis();
 				time = finalTime - initTime;
