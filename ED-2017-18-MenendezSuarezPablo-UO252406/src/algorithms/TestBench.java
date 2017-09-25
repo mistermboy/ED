@@ -1,102 +1,80 @@
 package algorithms;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.util.Locale;
 
 import javax.swing.text.DefaultEditorKit.CutAction;
 
 public class TestBench {
 	
-	static long SLEEP_TIME = 250;
+	
 
 	public static void main(String[] args) {
 		TestBench t = new TestBench();
-		t.testLinear("SalidaLinear.csv", 0, 10, 5);
-		t.testQuadratic("SalidaQuadratic.csv", 0, 10, 5);
-		t.testCubic("SalidaCubic.csv", 0, 5, 5);
-		t.testLogaritmic("SalidaLogaritmic", 0, 20, 5);
-	}
-
+//		t.testLinear("SalidaLinear.csv", 0, 10, 5);
+//		t.testQuadratic("SalidaQuadratic.csv", 0, 10, 5);
+//		t.testCubic("SalidaCubic.csv", 0, 5, 5);
+//		t.testLogaritmic("SalidaLogaritmic", 0, 20, 5);
 	
-	/**
-	 * Método que duerme el hilo durante el tiempo que se le pasa por constante	SLLEP_TIME
-	 * 
-	 */
-	private static void doNothing() {
-		try {
-			Thread.sleep(SLEEP_TIME);
-		}catch(InterruptedException e){
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 *  Método que realiza un algoritmo con complejidad O(n)
-	 * @param n, número de veces que se repite el algoritmo, de tipo int
-	 */
-	public static void linear(int n) {
+//		System.out.println("Factorial Iterativo");
+//		System.out.println();
+//		
+//		System.out.println(Algorithms.factorial(0));
+//		System.out.println(Algorithms.factorial(1));
+//		System.out.println(Algorithms.factorial(2));
+//		System.out.println(Algorithms.factorial(3));
+//		System.out.println(Algorithms.factorial(4));
+//		System.out.println(Algorithms.factorial(5));
+//		System.out.println(Algorithms.factorial(6));
+//		System.out.println(Algorithms.factorial(7));
+//		
+//		System.out.println();
+//		System.out.println("Factorial Recursivo");
+//		System.out.println();
+//		
+//		System.out.println(Algorithms.factorialRec(0));
+//		System.out.println(Algorithms.factorialRec(1));
+//		System.out.println(Algorithms.factorialRec(2));
+//		System.out.println(Algorithms.factorialRec(3));
+//		System.out.println(Algorithms.factorialRec(4));
+//		System.out.println(Algorithms.factorialRec(5));
+//		System.out.println(Algorithms.factorialRec(6));
+//		System.out.println(Algorithms.factorialRec(7));
 		
-		for (int i = 0; i <= n; i++) {
+		
 
-			doNothing();
-		}
-	}
-	 
-	 /**
-	  * Método que realiza un algoritmo con complejidad O(n^2)
-	  * @param n, número de veces que se repite el algoritmo, de tipo int
-	  */
-	public static void quadratic(int n) {
-
-		for (int i = 0; i <= n; i++) {
-			for (int j = 0; j <= n; j++) {
-				doNothing();
-			}
-		}
-	}
-	 
-	 /**
-	  * Método que realiza un algoritmo  con complejidad O(n^3)
-	  * @param n, número de veces que se repite el algoritmo, de tipo int
-	  */
-	public static void cubic(int n) {
-
-		for (int i = 0; i <= n; i++) {
-			for (int j = 0; j <= n; j++) {
-				for (int k = 0; k <= n; k++) {
-					doNothing();
-				}
-			}
-		}
+		System.out.println();
+		System.out.println("Fibonacci Iterativo");
+		System.out.println();
+		
+		System.out.println(Algorithms.fibonacci(0));
+		System.out.println(Algorithms.fibonacci(1));
+		System.out.println(Algorithms.fibonacci(2));		
+		System.out.println(Algorithms.fibonacci(3));
+		System.out.println(Algorithms.fibonacci(4));
+		System.out.println(Algorithms.fibonacci(5));
+		System.out.println(Algorithms.fibonacci(6));
+		System.out.println(Algorithms.fibonacci(7));
+		
+		
+		System.out.println();
+		System.out.println("Fibonacci Recursivo");
+		System.out.println();
+		
+		System.out.println(Algorithms.fibonacciRec(0));
+		System.out.println(Algorithms.fibonacciRec(1));
+		System.out.println(Algorithms.fibonacciRec(2));		
+		System.out.println(Algorithms.fibonacciRec(3));
+		System.out.println(Algorithms.fibonacciRec(4));
+		System.out.println(Algorithms.fibonacciRec(5));
+		System.out.println(Algorithms.fibonacciRec(6));
+		System.out.println(Algorithms.fibonacciRec(7));
+	
 	}
 
-	 /**
-	  * Método que realiza un algoritmo con complejidad O(log n)
-	  * @param n, número de veces que se repite el algoritmo, de tipo int
-	  */
-	public static void logarithm(int n) {
-		for (int i = 1; i <= n; i*=2) {
-			doNothing();
-		}
-
-	}
-
-
-	/**
-	 * Método que relaiza un algoritmo que eleva 2 a el número que se le pasa por parï¿½metro.
-	 * La complejidad es lineal, ya que solo tiene un bucle for.
-	 * @param n, número al que se le quiere elevar el 2, de tipo int 
-	 */		 
-	public static long pow2iter(int n) {
-		long total = 1;
-		if (n > 0)
-			for (int i = 0; i < n; i++) {
-				doNothing();
-				total = total * 2;
-			}
-
-		return total;
-	}
+	
+	
 
 	/**
 	 * Método que estudia el comportamiento del algoritmo con complejidad
@@ -123,7 +101,7 @@ public class TestBench {
 			for (int i = startN; i <= endN; i++) {
 				initTime = System.currentTimeMillis();
 				for (int nVeces = 1; nVeces < times; nVeces++) {
-					linear(i);
+					Algorithms.linear(i);
 				}
 				finalTime = System.currentTimeMillis();
 				time = finalTime - initTime;
@@ -167,7 +145,7 @@ public class TestBench {
 			for (int i = startN; i <= endN; i++) {
 				initTime = System.currentTimeMillis();
 				for (int nVeces = 1; nVeces < times; nVeces++) {
-					quadratic(i);
+					Algorithms.quadratic(i);
 				}
 				finalTime = System.currentTimeMillis();
 				time = finalTime - initTime;
@@ -213,7 +191,7 @@ public class TestBench {
 			for (int i = startN; i <= endN; i++) {
 				initTime = System.currentTimeMillis();
 				for (int nVeces = 1; nVeces < times; nVeces++) {
-					cubic(i);
+					Algorithms.cubic(i);
 				}
 				finalTime = System.currentTimeMillis();
 				time = finalTime - initTime;
@@ -258,7 +236,7 @@ public class TestBench {
 			for (int i = startN; i <= endN; i++) {
 				initTime = System.currentTimeMillis();
 				for (int nVeces = 1; nVeces < times; nVeces++) {
-					logarithm(i);
+					Algorithms.logarithm(i);
 				}
 				finalTime = System.currentTimeMillis();
 				time = finalTime - initTime;
@@ -275,6 +253,85 @@ public class TestBench {
 				e2.printStackTrace();
 			}
 		}
+	}
+	
+	
+	/**
+	 * Método que todo que estudia el comportamiento del algoritmo deseado
+	 * logarítmica.
+	 * 
+	  * @param output
+	 *            Nombre del fichero de salida, te tipo csv, de tipo String
+	 * @param startN
+	 *            Cota inferior, de tipo int
+	 * @param endN
+	 *            Cota superior, de tipo int
+	 * @param times
+	 *            Número de veces que se ejecuta el algotitmo por iteración, de tipo int
+	 *            
+	 * @param className 
+	 * 				Nombre de la clase donde se encuentra el método
+	 * 
+	 * @param methodName
+	 * 				Nombre del método
+	 */
+	public void test(String output, int startN, int endN, int times,String className, String methodName) {
+
+		FileWriter file = null;
+		PrintWriter pw;
+		double initTime, finalTime, time;
+
+		try {
+			file = new FileWriter(output);
+			pw = new PrintWriter(file);
+			for (int i = startN; i <= endN; i++) {
+				initTime = System.currentTimeMillis();
+				for (int nVeces = 1; nVeces < times; nVeces++) {
+					testAlgorithm(className,methodName,i);
+					Algorithms.linear(i);
+				}
+				finalTime = System.currentTimeMillis();
+				time = finalTime - initTime;
+				System.out.println("Executing " + i);
+				pw.println(i + ";" + time);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (file != null)
+					file.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	
+	/**
+	 * Tiempo en milisegundos que tarda en ejecutarse el método “nomMetodo” de la clase “nomClase” con un parámetro entero “n”
+	 * @param className, nombre de la clase que se quiere utilizar, de tipo String
+	 * @param methodName, nombre del método que se quiere utilizar, de tipo String
+	 * @param n,parámetro que se le pasa al método, de tipo int
+	 * @throws IOException
+	 */
+	public long testAlgorithm(String className, String methodName, int n) {
+		long tInicial = 0, tFinal = 0;
+
+		Class<?> cl;
+		try {
+			cl = Class.forName(className);
+			Object o = cl.newInstance();
+			Method m = cl.getMethod(methodName, int.class);
+
+			tInicial = System.currentTimeMillis();
+			m.invoke(o, n);
+			tFinal = System.currentTimeMillis();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tFinal - tInicial;
 	}
 	
 }
