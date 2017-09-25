@@ -1,3 +1,4 @@
+package algorithms;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Locale;
@@ -10,17 +11,15 @@ public class TestBench {
 
 	public static void main(String[] args) {
 		TestBench t = new TestBench();
-		//t.testLinear("SalidaLinear.csv",0,10,5);
-		//t.testQuadratic("SalidaQuadratic.csv",0,10,5);
-		//t.testCubic("SalidaCubic.csv", 0, 5, 5);
-		t.testLogaritmic("SalidaLogaritmic", 0, 5, 5);
+		t.testLinear("SalidaLinear.csv", 0, 10, 5);
+		t.testQuadratic("SalidaQuadratic.csv", 0, 10, 5);
+		t.testCubic("SalidaCubic.csv", 0, 5, 5);
+		t.testLogaritmic("SalidaLogaritmic", 0, 20, 5);
 	}
-	
-	// puto mono eres un payaso.
 
 	
 	/**
-	 * Mï¿½todo que duerme el hilo durante el tiempo que se le pasa por constante	SLLEP_TIME
+	 * Método que duerme el hilo durante el tiempo que se le pasa por constante	SLLEP_TIME
 	 * 
 	 */
 	private static void doNothing() {
@@ -32,8 +31,8 @@ public class TestBench {
 	}
 	
 	/**
-	 *  Mï¿½todo que realiza un algoritmo con complejidad O(n)
-	 * @param n, nï¿½mero de veces que se repite el algoritmo, de tipo int
+	 *  Método que realiza un algoritmo con complejidad O(n)
+	 * @param n, número de veces que se repite el algoritmo, de tipo int
 	 */
 	public static void linear(int n) {
 		
@@ -44,8 +43,8 @@ public class TestBench {
 	}
 	 
 	 /**
-	  * Mï¿½todo que realiza un algoritmo con complejidad O(n^2)
-	  * @param n, nï¿½mero de veces que se repite el algoritmo, de tipo int
+	  * Método que realiza un algoritmo con complejidad O(n^2)
+	  * @param n, número de veces que se repite el algoritmo, de tipo int
 	  */
 	public static void quadratic(int n) {
 
@@ -57,8 +56,8 @@ public class TestBench {
 	}
 	 
 	 /**
-	  * Mï¿½todo que realiza un algoritmo  con complejidad O(n^3)
-	  * @param n, nï¿½mero de veces que se repite el algoritmo, de tipo int
+	  * Método que realiza un algoritmo  con complejidad O(n^3)
+	  * @param n, número de veces que se repite el algoritmo, de tipo int
 	  */
 	public static void cubic(int n) {
 
@@ -72,12 +71,11 @@ public class TestBench {
 	}
 
 	 /**
-	  * Mï¿½todo que realiza un algoritmo con complejidad O(log n)
-	  * @param n, nï¿½mero de veces que se repite el algoritmo, de tipo int
+	  * Método que realiza un algoritmo con complejidad O(log n)
+	  * @param n, número de veces que se repite el algoritmo, de tipo int
 	  */
 	public static void logarithm(int n) {
-
-		for (long i = 0; i <= n; i = i *= 2) {
+		for (int i = 1; i <= n; i*=2) {
 			doNothing();
 		}
 
@@ -85,14 +83,14 @@ public class TestBench {
 
 
 	/**
-	 * Mï¿½todo que relaiza un algoritmo que eleva 2 a el nï¿½mero que se le pasa por parï¿½metro.
+	 * Método que relaiza un algoritmo que eleva 2 a el número que se le pasa por parï¿½metro.
 	 * La complejidad es lineal, ya que solo tiene un bucle for.
-	 * @param n, numï¿½ro al que se le quiere elevar el 2, de tipo int 
+	 * @param n, número al que se le quiere elevar el 2, de tipo int 
 	 */		 
 	public static long pow2iter(int n) {
 		long total = 1;
 		if (n > 0)
-			for (long i = 0; i < n; i++) {
+			for (int i = 0; i < n; i++) {
 				doNothing();
 				total = total * 2;
 			}
@@ -101,7 +99,7 @@ public class TestBench {
 	}
 
 	/**
-	 * Mï¿½todo que estudia el comportamiento del algoritmo con complejidad
+	 * Método que estudia el comportamiento del algoritmo con complejidad
 	 * lineal.
 	 * 
 	 * @param output
@@ -111,7 +109,7 @@ public class TestBench {
 	 * @param endN
 	 *            Cota superior, de tipo int
 	 * @param times
-	 *            Nï¿½mero de veces que se ejecuta el algotitmo por iteraciï¿½n, de tipo int
+	 *            Número de veces que se ejecuta el algotitmo por iteración, de tipo int
 	 */
 	public void testLinear(String output, int startN, int endN, int times) {
 
@@ -145,8 +143,8 @@ public class TestBench {
 	}
 
 	/**
-	 * Mï¿½todo que estudia el comportamiento del algoritmo con complejidad
-	 * cuadrï¿½tica.
+	 * Método que todo que estudia el comportamiento del algoritmo con complejidad
+	 * cuadrática.
 	 * 
 	  * @param output
 	 *            Nombre del fichero de salida, te tipo csv, de tipo String
@@ -155,7 +153,7 @@ public class TestBench {
 	 * @param endN
 	 *            Cota superior, de tipo int
 	 * @param times
-	 *            Nï¿½mero de veces que se ejecuta el algotitmo por iteraciï¿½n, de tipo int
+	 *            Número de veces que se ejecuta el algotitmo por iteración, de tipo int
 	 */
 	public void testQuadratic(String output, int startN, int endN, int times) {
 
@@ -191,8 +189,8 @@ public class TestBench {
 	
 
 	/**
-	 * Mï¿½todo que estudia el comportamiento del algoritmo con complejidad
-	 * cï¿½bica.
+	 * Método que todo que estudia el comportamiento del algoritmo con complejidad
+	 * cúbica.
 	 * 
 	  * @param output
 	 *            Nombre del fichero de salida, te tipo csv, de tipo String
@@ -201,7 +199,7 @@ public class TestBench {
 	 * @param endN
 	 *            Cota superior, de tipo int
 	 * @param times
-	 *            Nï¿½mero de veces que se ejecuta el algotitmo por iteraciï¿½n, de tipo int
+	 *            Número de veces que se ejecuta el algotitmo por iteración, de tipo int
 	 */
 	public void testCubic(String output, int startN, int endN, int times) {
 
@@ -236,8 +234,8 @@ public class TestBench {
 	
 	
 	/**
-	 * Mï¿½todo que estudia el comportamiento del algoritmo con complejidad
-	 * logarï¿½tmica.
+	 * Método que todo que estudia el comportamiento del algoritmo con complejidad
+	 * logarítmica.
 	 * 
 	  * @param output
 	 *            Nombre del fichero de salida, te tipo csv, de tipo String
@@ -246,7 +244,7 @@ public class TestBench {
 	 * @param endN
 	 *            Cota superior, de tipo int
 	 * @param times
-	 *            Nï¿½mero de veces que se ejecuta el algotitmo por iteraciï¿½n, de tipo int
+	 *            Número de veces que se ejecuta el algotitmo por iteración, de tipo int
 	 */
 	public void testLogaritmic(String output, int startN, int endN, int times) {
 
@@ -260,7 +258,7 @@ public class TestBench {
 			for (int i = startN; i <= endN; i++) {
 				initTime = System.currentTimeMillis();
 				for (int nVeces = 1; nVeces < times; nVeces++) {
-					cubic(i);
+					logarithm(i);
 				}
 				finalTime = System.currentTimeMillis();
 				time = finalTime - initTime;
