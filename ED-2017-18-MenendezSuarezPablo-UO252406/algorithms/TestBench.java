@@ -39,7 +39,7 @@ public class TestBench {
 
 	
 	/**
-	 * Método que todo que estudia el comportamiento del algoritmo deseado
+	 * Mï¿½todo que todo que estudia el comportamiento del algoritmo deseado
 	 * 
 	  * @param output
 	 *            Nombre del fichero de salida, te tipo csv, de tipo String
@@ -48,13 +48,13 @@ public class TestBench {
 	 * @param endN
 	 *            Cota superior, de tipo int
 	 * @param times
-	 *            Número de veces que se ejecuta el algotitmo por iteración, de tipo int
+	 *            Nï¿½mero de veces que se ejecuta el algotitmo por iteraciï¿½n, de tipo int
 	 *            
 	 * @param className 
-	 * 				Nombre de la clase donde se encuentra el método
+	 * 				Nombre de la clase donde se encuentra el mï¿½todo
 	 * 
 	 * @param methodName
-	 * 				Nombre del método
+	 * 				Nombre del mï¿½todo
 	 */
 	public void test(String output, int startN, int endN, int times,String className, String methodName) {
 
@@ -89,10 +89,10 @@ public class TestBench {
 	
 	
 	/**
-	 * Tiempo en milisegundos que tarda en ejecutarse el método “nomMetodo” de la clase “nomClase” con un parámetro entero “n”
+	 * Tiempo en milisegundos que tarda en ejecutarse el mï¿½todo ï¿½nomMetodoï¿½ de la clase ï¿½nomClaseï¿½ con un parï¿½metro entero ï¿½nï¿½
 	 * @param className, nombre de la clase que se quiere utilizar, de tipo String
-	 * @param methodName, nombre del método que se quiere utilizar, de tipo String
-	 * @param n,parámetro que se le pasa al método, de tipo int
+	 * @param methodName, nombre del mï¿½todo que se quiere utilizar, de tipo String
+	 * @param n,parï¿½metro que se le pasa al mï¿½todo, de tipo int
 	 * @throws IOException
 	 */
 	public long testAlgorithm(String className, String methodName, int n) {
@@ -116,7 +116,7 @@ public class TestBench {
 	
 	
 	/**
-	 * Método que estudia el comportamiento del algoritmo con complejidad
+	 * Mï¿½todo que estudia el comportamiento del algoritmo con complejidad
 	 * lineal.
 	 * 
 	 * @param output
@@ -126,7 +126,7 @@ public class TestBench {
 	 * @param endN
 	 *            Cota superior, de tipo int
 	 * @param times
-	 *            Número de veces que se ejecuta el algotitmo por iteración, de tipo int
+	 *            Nï¿½mero de veces que se ejecuta el algotitmo por iteraciï¿½n, de tipo int
 	 */
 	public void testLinear(String output, int startN, int endN, int times) {
 
@@ -160,8 +160,8 @@ public class TestBench {
 	}
 
 	/**
-	 * Método que todo que estudia el comportamiento del algoritmo con complejidad
-	 * cuadrática.
+	 * Mï¿½todo que todo que estudia el comportamiento del algoritmo con complejidad
+	 * cuadrï¿½tica.
 	 * 
 	  * @param output
 	 *            Nombre del fichero de salida, te tipo csv, de tipo String
@@ -170,7 +170,7 @@ public class TestBench {
 	 * @param endN
 	 *            Cota superior, de tipo int
 	 * @param times
-	 *            Número de veces que se ejecuta el algotitmo por iteración, de tipo int
+	 *            Nï¿½mero de veces que se ejecuta el algotitmo por iteraciï¿½n, de tipo int
 	 */
 	public void testQuadratic(String output, int startN, int endN, int times) {
 
@@ -206,8 +206,8 @@ public class TestBench {
 	
 
 	/**
-	 * Método que todo que estudia el comportamiento del algoritmo con complejidad
-	 * cúbica.
+	 * Mï¿½todo que todo que estudia el comportamiento del algoritmo con complejidad
+	 * cï¿½bica.
 	 * 
 	  * @param output
 	 *            Nombre del fichero de salida, te tipo csv, de tipo String
@@ -216,7 +216,7 @@ public class TestBench {
 	 * @param endN
 	 *            Cota superior, de tipo int
 	 * @param times
-	 *            Número de veces que se ejecuta el algotitmo por iteración, de tipo int
+	 *            Nï¿½mero de veces que se ejecuta el algotitmo por iteraciï¿½n, de tipo int
 	 */
 	public void testCubic(String output, int startN, int endN, int times) {
 
@@ -251,8 +251,8 @@ public class TestBench {
 	
 	
 	/**
-	 * Método que todo que estudia el comportamiento del algoritmo con complejidad
-	 * logarítmica.
+	 * Mï¿½todo que todo que estudia el comportamiento del algoritmo con complejidad
+	 * logarï¿½tmica.
 	 * 
 	  * @param output
 	 *            Nombre del fichero de salida, te tipo csv, de tipo String
@@ -261,7 +261,7 @@ public class TestBench {
 	 * @param endN
 	 *            Cota superior, de tipo int
 	 * @param times
-	 *            Número de veces que se ejecuta el algotitmo por iteración, de tipo int
+	 *            Nï¿½mero de veces que se ejecuta el algotitmo por iteraciï¿½n, de tipo int
 	 */
 	public void testLogaritmic(String output, int startN, int endN, int times) {
 
