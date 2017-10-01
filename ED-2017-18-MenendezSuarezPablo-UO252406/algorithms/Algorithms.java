@@ -7,7 +7,7 @@ public class Algorithms {
 
 	
 	/**
-	 * Método que duerme el hilo durante el tiempo que se le pasa por constante	SLLEP_TIME
+	 * Mï¿½todo que duerme el hilo durante el tiempo que se le pasa por constante	SLLEP_TIME
 	 * 
 	 */
 	private static void doNothing() {
@@ -19,8 +19,8 @@ public class Algorithms {
 	}
 	
 	/**
-	 *  Método que realiza un algoritmo con complejidad O(n)
-	 * @param n, número de veces que se repite el algoritmo, de tipo int
+	 *  Mï¿½todo que realiza un algoritmo con complejidad O(n)
+	 * @param n, nï¿½mero de veces que se repite el algoritmo, de tipo int
 	 */
 	public static void linear(int n) {
 		if (n < 0) {
@@ -34,8 +34,8 @@ public class Algorithms {
 	}
 	 
 	 /**
-	  * Método que realiza un algoritmo con complejidad O(n^2)
-	  * @param n, número de veces que se repite el algoritmo, de tipo int
+	  * Mï¿½todo que realiza un algoritmo con complejidad O(n^2)
+	  * @param n, nï¿½mero de veces que se repite el algoritmo, de tipo int
 	  */
 	public static void quadratic(int n) {
 		if (n < 0) {
@@ -50,8 +50,8 @@ public class Algorithms {
 	}
 	 
 	 /**
-	  * Método que realiza un algoritmo  con complejidad O(n^3)
-	  * @param n, número de veces que se repite el algoritmo, de tipo int
+	  * Mï¿½todo que realiza un algoritmo  con complejidad O(n^3)
+	  * @param n, nï¿½mero de veces que se repite el algoritmo, de tipo int
 	  */
 	public static void cubic(int n) {
 
@@ -69,8 +69,8 @@ public class Algorithms {
 	}
 
 	 /**
-	  * Método que realiza un algoritmo con complejidad O(log n)
-	  * @param n, número de veces que se repite el algoritmo, de tipo int
+	  * Mï¿½todo que realiza un algoritmo con complejidad O(log n)
+	  * @param n, nï¿½mero de veces que se repite el algoritmo, de tipo int
 	  */
 	public static void logarithm(int n) {
 		if (n < 0) {
@@ -84,9 +84,9 @@ public class Algorithms {
 
 
 	/**
-	 * Método que relaiza un algoritmo que eleva 2 a el número que se le pasa por parï¿½metro.
+	 * Mï¿½todo que relaiza un algoritmo que eleva 2 a el nï¿½mero que se le pasa por parï¿½metro.
 	 * La complejidad es lineal, ya que solo tiene un bucle for.
-	 * @param n, número al que se le quiere elevar el 2, de tipo int 
+	 * @param n, nï¿½mero al que se le quiere elevar el 2, de tipo int 
 	 * 			-1 en caso de que el n introducido sea menor que 0
 	 */		 
 	public static long pow2iter(int n) {
@@ -104,9 +104,9 @@ public class Algorithms {
 	}
 	
 	/**
-	 * Método iterativo que calcula el factorial de un número que se le pasa por parámetro
-	 * @param n número del que se desea averiguar su factorial, de tipo int
-	 * @return factorial del número indicado, de tipo long
+	 * Mï¿½todo iterativo que calcula el factorial de un nï¿½mero que se le pasa por parï¿½metro
+	 * @param n nï¿½mero del que se desea averiguar su factorial, de tipo int
+	 * @return factorial del nï¿½mero indicado, de tipo long
 	 * 			-1 en caso de que el n introducido sea menor que 0
 	 */
 	public  long factorialIterativo(int n) {
@@ -124,9 +124,9 @@ public class Algorithms {
 	
 	
 	/**
-	 * Método recursivo que calcula el factorial de un número que se le pasa por parámetro
-	 * @param n número del que se desea averiguar su factorial, de tipo int
-	 * @return factorial del número indicado, de tipo long
+	 * Mï¿½todo recursivo que calcula el factorial de un nï¿½mero que se le pasa por parï¿½metro
+	 * @param n nï¿½mero del que se desea averiguar su factorial, de tipo int
+	 * @return factorial del nï¿½mero indicado, de tipo long
 	 * 			-1 en caso de que el n introducido sea menor que 0
 	 */
 	public  long factorialRec(int n) {
@@ -144,8 +144,8 @@ public class Algorithms {
 	
 	
 	/**
-	 * Método iterativo que calcula el término de la sucesión de fibonacci que se le indica
-	 * @param n termino de la sucesión que se desea averiguar, de tipo int
+	 * Mï¿½todo iterativo que calcula el tï¿½rmino de la sucesiï¿½n de fibonacci que se le indica
+	 * @param n termino de la sucesiï¿½n que se desea averiguar, de tipo int
 	 * @return resultado, de tipo long
 	 * 			-1 en caso de que el n introducido sea menor que 0
 	 */
@@ -172,8 +172,8 @@ public class Algorithms {
 	
 	
 	/**
-	 * Método recursivo que calcula el término de la sucesión de fibonacci que se le indica
-	 * @param n termino de la sucesión que se desea averiguar, de tipo int
+	 * Mï¿½todo recursivo que calcula el tï¿½rmino de la sucesiï¿½n de fibonacci que se le indica
+	 * @param n termino de la sucesiï¿½n que se desea averiguar, de tipo int
 	 * @return resultado, de tipo long
 	 * 			-1 en caso de que el n introducido sea menor que 0
 	 */
@@ -196,9 +196,9 @@ public class Algorithms {
 
 	
 	/**
-	 * Método que relaiza un algoritmo que eleva 2 a el número que se le pasa por parámetro. 
+	 * Mï¿½todo que relaiza un algoritmo que eleva 2 a el nï¿½mero que se le pasa por parï¿½metro. 
 	 * La complejidad es lineal.
-	 * @param n, numéro al que se le quiere elevar el 2, de tipo int 
+	 * @param n, numï¿½ro al que se le quiere elevar el 2, de tipo int 
 	 * * @return el resulado obtenido, de tipo long
 	 * 			-1 en caso de que el n introducido sea menor que 0
 	 */	
@@ -215,9 +215,9 @@ public class Algorithms {
 	}
 
 	/**
-	 * Método que relaiza un algoritmo que eleva 2 a el número que se le pasa por parámetro. 
-	 * La complejidad es cúbica.
-	 * @param n, numéro al que se le quiere elevar el 2, de tipo int
+	 * Mï¿½todo que relaiza un algoritmo que eleva 2 a el nï¿½mero que se le pasa por parï¿½metro. 
+	 * La complejidad es cï¿½bica.
+	 * @param n, numï¿½ro al que se le quiere elevar el 2, de tipo int
 	 * @return el resulado obtenido, de tipo long
 	 * 			-1 en caso de que el n introducido sea menor que 0
 	 */	
@@ -234,9 +234,9 @@ public class Algorithms {
 	}
 	
 	/**
-	 * Método que relaiza un algoritmo que eleva 2 a el número que se le pasa por parámetro. 
-	 * La complejidad es logarítmica.
-	 * @param n, numéro al que se le quiere elevar el 2, de tipo int
+	 * Mï¿½todo que relaiza un algoritmo que eleva 2 a el nï¿½mero que se le pasa por parï¿½metro. 
+	 * La complejidad es logarï¿½tmica.
+	 * @param n, numï¿½ro al que se le quiere elevar el 2, de tipo int
 	 * @return el resulado obtenido, de tipo long
 	 * 			-1 en caso de que el n introducido sea menor que 0
 	 */	
@@ -256,9 +256,9 @@ public class Algorithms {
 	}
 
 	/**
-	 * Método que relaiza un algoritmo que eleva 2 a el número que se le pasa por parámetro. 
+	 * Mï¿½todo que relaiza un algoritmo que eleva 2 a el nï¿½mero que se le pasa por parï¿½metro. 
 	 * La complejidad es lineal.
-	 * @param n, numéro al que se le quiere elevar el 2, de tipo int
+	 * @param n, numï¿½ro al que se le quiere elevar el 2, de tipo int
 	 * @return el resulado obtenido, de tipo long
 	 * 			-1 en caso de que el n introducido sea menor que 0
 	 */	
