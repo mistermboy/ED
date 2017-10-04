@@ -124,20 +124,116 @@ public class GraphTest {
 		
 	}
 
-	/*
+	/**
 	 * Pruebas para el método existNode
 	 */
 	@Test
 	public <T> void testExistNode() {
-		Graph<String> graph = new Graph<String>(8);
+		
+		//INTEGERS
+		assertEquals(0, gE.getNumberOfNodes());
+		
+		assertEquals(0,gE.addNode(2));
+		assertEquals(0,gE.addNode(8));
+		assertEquals(0,gE.addNode(69));
+		assertEquals(0,gE.addNode(23));
+		assertEquals(0,gE.addNode(1));
 
-		//Comprobar que existe un nodo que realmente existe
-		graph.addNode("hola");
-		assertTrue(graph.existNode("hola"));
-		//Comprobar que existe un nodo que realmente no existe
-		assertFalse(graph.existNode("adios"));
+		//Comprobar la existencia de nodos que existen
+		assertTrue(gE.existNode(2));
+		assertTrue(gE.existNode(8));
+		assertTrue(gE.existNode(69));
+		assertTrue(gE.existNode(23));
+		assertTrue(gE.existNode(1));
+		//Comprobar la existencia de nodos que no existen
+		assertFalse(gE.existNode(0));
+		assertFalse(gE.existNode(666));
+		assertFalse(gE.existNode(77));
+		assertFalse(gE.existNode(26));
+		assertFalse(gE.existNode(16));
 		//Comprobar un null
-		assertFalse(graph.existNode(null));
+		assertFalse(gE.existNode(null));
+		
+		
+		//STRINGS
+		assertEquals(0, gS.getNumberOfNodes());
+		
+		assertEquals(0,gS.addNode("Darth"));
+		assertEquals(0,gS.addNode("Vader"));
+		assertEquals(0,gS.addNode("SL8R"));
+		assertEquals(0,gS.addNode("STFU"));
+		assertEquals(0,gS.addNode("EUKZ"));
+	
+
+		//Comprobar la existencia de nodos que existen
+		assertTrue(gS.existNode("Darth"));
+		assertTrue(gS.existNode("Vader"));
+		assertTrue(gS.existNode("SL8R"));
+		assertTrue(gS.existNode("STFU"));
+		assertTrue(gS.existNode("EUKZ"));
+	
+		//Comprobar la existencia de nodos que no existen
+		assertFalse(gS.existNode("SK8"));
+		assertFalse(gS.existNode("OR"));
+		assertFalse(gS.existNode("DIE"));
+		assertFalse(gS.existNode("NEXT"));
+		assertFalse(gS.existNode("SAPE"));
+
+		//Comprobar un null
+		assertFalse(gS.existNode(null));
+		
+		
+		//CHARACTERS
+		
+		assertEquals(0, gC.getNumberOfNodes());
+		
+		assertEquals(0,gC.addNode('S'));
+		assertEquals(0,gC.addNode('T'));
+		assertEquals(0,gC.addNode('P'));
+		assertEquals(0,gC.addNode('A'));
+		assertEquals(0,gC.addNode('U'));
+		
+		//Comprobar la existencia de nodos que existen
+		assertTrue(gC.existNode('S'));
+		assertTrue(gC.existNode('T'));
+		assertTrue(gC.existNode('P'));
+		assertTrue(gC.existNode('A'));
+		assertTrue(gC.existNode('U'));
+	
+		//Comprobar la existencia de nodos que no existen
+		assertFalse(gC.existNode('E'));
+		assertFalse(gC.existNode('L'));
+		assertFalse(gC.existNode('C'));
+		assertFalse(gC.existNode('I'));
+		assertFalse(gC.existNode('N'));
+
+		//Comprobar un null
+		assertFalse(gC.existNode(null));
+		
+		
+		//GRAFO DE CLASE
+		
+		assertEquals(0, gClase.getNumberOfNodes());
+		
+		assertEquals(0,gClase.addNode('A'));
+		assertEquals(0,gClase.addNode('B'));
+		assertEquals(0,gClase.addNode('C'));
+		assertEquals(0,gClase.addNode('D'));
+		assertEquals(0,gClase.addNode('E'));
+		
+		//Comprobar la existencia de nodos que existen
+		assertTrue(gClase.existNode('A'));
+		assertTrue(gClase.existNode('B'));
+		assertTrue(gClase.existNode('C'));
+		assertTrue(gClase.existNode('D'));
+		assertTrue(gClase.existNode('E'));
+	
+		//Comprobar la existencia de nodos que no existen
+		assertFalse(gC.existNode('M'));
+		assertFalse(gC.existNode('L'));
+		assertFalse(gC.existNode('Y'));
+		assertFalse(gC.existNode('I'));
+		assertFalse(gC.existNode('N'));
 		
 	}
 	
