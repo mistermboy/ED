@@ -262,7 +262,7 @@ public class Algorithms {
 	 * @return el resulado obtenido, de tipo long
 	 * 			-1 en caso de que el n introducido sea menor que 0
 	 */	
-	public static long pow4Rec(int n) {
+	public  long pow4Rec(int n) {
 		if (n >= 0) {
 			doNothing();
 			if (n == 0) {

@@ -10,6 +10,7 @@ public class Graph<T> {
 	int numNodes;
 	
 	
+	@SuppressWarnings("unchecked")
 	public Graph(int tam) {
 		nodes =  (T[]) new Object[tam];
 		edges = new boolean[tam][tam];
@@ -57,22 +58,6 @@ public class Graph<T> {
 	 * @return 0 si lo inserta, -1 si no puede insertarlo
 	 */
 	public int addNode(T node) {
-		
-		
-		
-		
-		
-		
-		
-		
-		//FALTA EL FOR
-		
-		
-		
-		
-		
-		
-		
 		if (node != null) {
 			if (getNode(node) == -1 && numNodes < nodes.length) {
 				nodes[numNodes] = node;
@@ -99,7 +84,7 @@ public class Graph<T> {
 		if (!isEmpty()) {
 			if (index != -1) {
 				--numNodes;
-				if (index != numNodes + 1) {
+				if (index != numNodes + 1) {	//Creo que sobra
 					nodes[index] = nodes[numNodes];
 					for (int j = 0; j <= numNodes; j++) {
 						edges[j][index] = edges[j][numNodes];
@@ -229,6 +214,73 @@ public class Graph<T> {
 
 	
 	/**
+	 * Algoritmo de Dijkstra, cuya función es encontrar 
+	 * el camino de coste mínimo desde un nodo que se pasa como parámetro hasta 
+	 * el resto de los nodos
+	 * @param nodoOrigen
+	 * @return vector D de dijkstra para comprobar funcionamiento
+	 */
+	public double[] dijkstra(T nodoOrigen) {
+		double[] D = new double[numNodes];
+		double[] P = new double[numNodes];
+		boolean[] V = new boolean[numNodes];
+		
+		
+		int inicio = getNode(nodoOrigen);
+		if(nodoOrigen==null || inicio==-1) {
+			return null;
+		}
+		
+		for(int i=0;i<numNodes;i++) {
+			V[i]=false;
+			if(i==inicio) {
+				D[i]=0.0;
+				P[i]=-1;
+				V[i]=true;
+			}else if(existEdge(nodoOrigen,nodes[i])) {
+				D[i]=getEdge(nodoOrigen, nodes[i]);
+				P[i]=inicio;
+			}else {
+				D[i]=Double.POSITIVE_INFINITY;
+				P[i]=-1;
+			}
+		}
+		
+		for (int i = 0; i < numNodes; i++) {
+
+			int w = minCost(D, V);
+			if (w != -1) {
+				V[w] = true;
+				for (int m = 0; m < numNodes; m++) {
+					if (edges[w][m]) {
+						if (D[w] + weights[w][m] < D[i]) {
+							D[i] = D[w] + weights[w][m];
+							P[i] = w;
+						}
+					}
+
+				}
+			}
+		}
+		return D;
+
+	}
+	
+	
+	private int minCost(double[] d, boolean[] v) {
+		double min = Double.POSITIVE_INFINITY;
+		int index=-1;
+		for(int i=0;i<numNodes;i++) {
+			if(!v[i] && d[i]<min) {
+				min = d[i];
+				index=i;
+			}
+		}
+		return index;
+	}
+
+
+	/**
 	 * Método que verifica que el grafo esté vacío
 	 * @return true si lo está, false en caso contrario
 	 */
@@ -248,6 +300,7 @@ public class Graph<T> {
 	/**
 	 * Método que borra todos los datos del grafo
 	 */
+	@SuppressWarnings("unchecked")
 	public void removeAll() {
 		nodes =  (T[]) new Object[nodes.length];
 		edges = new boolean[edges.length][edges.length];

@@ -10,6 +10,7 @@ import graphs.Graph;
 public class GraphTest {
 	
 	Graph<Integer> gE; //Grafo de enteros
+	Graph<Double> gD; //Grafo de doubles
 	Graph<String> gS; // Grafo de strings
 	Graph<Character> gC; //Grafo de chars
 	
@@ -17,10 +18,73 @@ public class GraphTest {
 
 	@Before
 	public void initialize() {
-		gE = new Graph<Integer>(12); 
+		gE = new Graph<Integer>(12);
+		
+		gE.addNode(2);
+		gE.addNode(8);
+		gE.addNode(69);
+		gE.addNode(23);
+		gE.addNode(1);
+		gE.addNode(7);
+		gE.addNode(77);
+		gE.addNode(26);
+		gE.addNode(16);
+		gE.addNode(21);
+		gE.addNode(0);
+		gE.addNode(-67);
+		
+		gD = new Graph<Double>(12);
+		
+		gD.addNode(2.);
+		gD.addNode(8.);
+		gD.addNode(69.);
+		gD.addNode(23.);
+		gD.addNode(1.);
+		gD.addNode(7.);
+		gD.addNode(77.);
+		gD.addNode(26.);
+		gD.addNode(16.);
+		gD.addNode(21.);
+		gD.addNode(0.);
+		gD.addNode(-67.);
+		
 		gS = new Graph<String>(12); 
+		
+		gS.addNode("Darth");
+		gS.addNode("Vader");
+		gS.addNode("SL8R");
+		gS.addNode("STFU");
+		gS.addNode("EUKZ");
+		gS.addNode("LPR");
+		gS.addNode("StPauli");
+		gS.addNode("ACAB");
+		gS.addNode("MW3");
+		gS.addNode("LCM");
+		gS.addNode("Mi5");
+		gS.addNode("Che");
+		
 		gC = new Graph<Character>(12); 
+		
+		gC.addNode('S');
+		gC.addNode('T');
+		gC.addNode('P');
+		gC.addNode('A');
+		gC.addNode('U');
+		gC.addNode('L');
+		gC.addNode('I');
+		gC.addNode('M');
+		gC.addNode('Y');
+		gC.addNode('C');
+		gC.addNode('R');
+		gC.addNode('Z');
+		
 		gClase = new Graph<Character>(5); 
+		
+		gClase.addNode('A');
+		gClase.addNode('B');
+		gClase.addNode('C');
+		gClase.addNode('D');
+		gClase.addNode('E');
 	}
 
 	/**
@@ -29,7 +93,16 @@ public class GraphTest {
 	@Test
 	public <T> void testAddNodes() {
 		
+		//Borramos todo
+		gE.removeAll();
+		gD.removeAll();
+		gS.removeAll();
+		gC.removeAll();
+		gClase.removeAll();
+		
+		
 		//INTEGERS
+		
 		assertEquals(0, gE.getNumberOfNodes());
 		
 		assertEquals(0,gE.addNode(2));
@@ -66,6 +139,25 @@ public class GraphTest {
 		//Añadir un nodo negativo
 		assertEquals(0,gE.addNode(99));
 		
+		
+		//DOUBLES
+		
+		assertEquals(0, gD.getNumberOfNodes());
+		
+		assertEquals(0,gD.addNode(2.));
+		assertEquals(0,gD.addNode(8.));
+		assertEquals(0,gD.addNode(69.));
+		assertEquals(0,gD.addNode(23.));
+		assertEquals(0,gD.addNode(1.));
+		assertEquals(0,gD.addNode(7.));
+		assertEquals(0,gD.addNode(77.));
+		assertEquals(0,gD.addNode(26.));
+		assertEquals(0,gD.addNode(16.));
+		assertEquals(0,gD.addNode(21.));
+		assertEquals(0,gD.addNode(0.));
+		assertEquals(0,gD.addNode(-67.));
+		
+		assertEquals(12, gD.getNumberOfNodes());
 		
 		//STRINGS
 		
@@ -130,7 +222,15 @@ public class GraphTest {
 	@Test
 	public <T> void testExistNode() {
 		
+		//Borramos todo
+		gE.removeAll();
+		gD.removeAll();
+		gS.removeAll();
+		gC.removeAll();
+		gClase.removeAll();
+		
 		//INTEGERS
+		
 		assertEquals(0, gE.getNumberOfNodes());
 		
 		assertEquals(0,gE.addNode(2));
@@ -154,6 +254,30 @@ public class GraphTest {
 		//Comprobar un null
 		assertFalse(gE.existNode(null));
 		
+		
+		//DOUBLES
+		assertEquals(0, gD.getNumberOfNodes());
+		
+		assertEquals(0,gD.addNode(2.));
+		assertEquals(0,gD.addNode(8.));
+		assertEquals(0,gD.addNode(69.));
+		assertEquals(0,gD.addNode(23.));
+		assertEquals(0,gD.addNode(1.));
+		
+		//Comprobar la existencia de nodos que existen
+		assertTrue(gD.existNode(2.));
+		assertTrue(gD.existNode(8.));
+		assertTrue(gD.existNode(69.));
+		assertTrue(gD.existNode(23.));
+		assertTrue(gD.existNode(1.));
+		//Comprobar la existencia de nodos que no existen
+		assertFalse(gD.existNode(0.));
+		assertFalse(gD.existNode(666.));
+		assertFalse(gD.existNode(77.));
+		assertFalse(gD.existNode(26.));
+		assertFalse(gD.existNode(16.));
+		//Comprobar un null
+		assertFalse(gD.existNode(null));
 		
 		//STRINGS
 		assertEquals(0, gS.getNumberOfNodes());
@@ -243,26 +367,146 @@ public class GraphTest {
 	 */
 	@Test
 	public <T> void testAddEdge() {
-		Graph<Double> graph = new Graph<Double>(6);
 		
-		//Añadir una arista entre dos nodos que existen
-		graph.addNode(5.0);
-		graph.addNode(6.0);
-		assertEquals(0,graph.addEdge(5.0, 6.0,3.0));
-		//Añadir una arista entre dos nodos que no existen
-		assertEquals(-1,graph.addEdge(4.0, 7.0,3.0));
-		//Añadir una arista entre un primer nodo que existe y un segundo nodo que no existe
-		assertEquals(-1,graph.addEdge(5.0, 7.0,3.0));
-		//Añadir una arista entre un primer nodo que no existe y un segundo nodo que si existe
-		assertEquals(-1,graph.addEdge(4.0, 6.0,3.0));
-		//Añadir una arista con un peso < 0
-		assertEquals(-1,graph.addEdge(5.0, 6.0,-5.0));
-		//Sobrescribir una arista
-		assertEquals(-1,graph.addEdge(5.0, 6.0,50.0));
-		//Add null
-		assertEquals(-1,graph.addEdge(null, 6.0,-5.0));
-		assertEquals(-1,graph.addEdge(5.0, null,-5.0));
-		assertEquals(-1,graph.addEdge(null, 6.0,-5.0));
+		
+		//INTEGERS
+		
+		//Añadir aristas entre nodos que existen
+		assertEquals(0,gE.addEdge(2,8,3.0));
+		assertEquals(0,gE.addEdge(1,7,5.0));
+		assertEquals(0,gE.addEdge(8,2,7.0));
+		assertEquals(0,gE.addEdge(-67,1,9.0));
+		assertEquals(0,gE.addEdge(0,77,1.0));
+		//Sobrescribir aristas
+		assertEquals(-1,gE.addEdge(2,8,33.0));
+		assertEquals(-1,gE.addEdge(1,7,555.0));
+		assertEquals(-1,gE.addEdge(8,2,77.0));
+		assertEquals(-1,gE.addEdge(-67,1,99.0));
+		assertEquals(-1,gE.addEdge(0,77,11.0));
+		//Añadir aristas con nodos origen que no existen
+		assertEquals(-1,gE.addEdge(-1,8,3.0));
+		assertEquals(-1,gE.addEdge(4,7,5.0));
+		assertEquals(-1,gE.addEdge(5,2,7.0));
+		assertEquals(-1,gE.addEdge(67,1,9.0));
+		assertEquals(-1,gE.addEdge(17,77,1.0));
+		//Añadir aristas con nodos destino que no existen
+		assertEquals(-1,gE.addEdge(8,-1,3.0));
+		assertEquals(-1,gE.addEdge(7,4,5.0));
+		assertEquals(-1,gE.addEdge(2,5,7.0));
+		assertEquals(-1,gE.addEdge(1,67,9.0));
+		assertEquals(-1,gE.addEdge(77,17,1.0));
+		//Añadir aristas entre nodos que no existen
+		assertEquals(-1,gE.addEdge(888,-1,3.0));
+		assertEquals(-1,gE.addEdge(777,4,5.0));
+		assertEquals(-1,gE.addEdge(222,5,7.0));
+		assertEquals(-1,gE.addEdge(111,67,9.0));
+		assertEquals(-1,gE.addEdge(777,17,1.0));
+		//Añadir aristas con peso negativo
+		assertEquals(-1,gE.addEdge(2,8,-3.0));
+		assertEquals(-1,gE.addEdge(1,7,-5.0));
+		assertEquals(-1,gE.addEdge(8,2,-7.0));
+		assertEquals(-1,gE.addEdge(-67,1,-9.0));
+		assertEquals(-1,gE.addEdge(0,77,-1.0));
+		//Añadir una arista con nodos null
+		assertEquals(-1,gE.addEdge(null,8,-3.0));
+		assertEquals(-1,gE.addEdge(1,null,-5.0));
+		assertEquals(-1,gE.addEdge(null,null,-7.0));
+		//Añadir una arista entre dos nodos iguales
+		assertEquals(-1,gE.addEdge(2,2,-7.0));
+		
+		//DOUBLES
+		
+		//Añadir aristas entre nodos que existen
+		assertEquals(0,gD.addEdge(2.,8.,3.0));
+		assertEquals(0,gD.addEdge(1.,7.,5.0));
+		assertEquals(0,gD.addEdge(8.,2.,7.0));
+		assertEquals(0,gD.addEdge(-67.,1.,9.0));
+		assertEquals(0,gD.addEdge(0.,77.,1.0));
+		//Sobrescribir aristas
+		assertEquals(-1,gD.addEdge(2.,8.,33.0));
+		assertEquals(-1,gD.addEdge(1.,7.,555.0));
+		assertEquals(-1,gD.addEdge(8.,2.,77.0));
+		assertEquals(-1,gD.addEdge(-67.,1.,99.0));
+		assertEquals(-1,gD.addEdge(0.,77.,11.0));
+		//Añadir aristas con nodos origen que no existen
+		assertEquals(-1,gD.addEdge(-1.,8.,3.0));
+		assertEquals(-1,gD.addEdge(4.,7.,5.0));
+		assertEquals(-1,gD.addEdge(5.,2.,7.0));
+		assertEquals(-1,gD.addEdge(67.,1.,9.0));
+		assertEquals(-1,gD.addEdge(17.,77.,1.0));
+		//Añadir aristas con nodos destino que no existen
+		assertEquals(-1,gD.addEdge(8.,-1.,3.0));
+		assertEquals(-1,gD.addEdge(7.,4.,5.0));
+		assertEquals(-1,gD.addEdge(2.,5.,7.0));
+		assertEquals(-1,gD.addEdge(1.,67.,9.0));
+		assertEquals(-1,gD.addEdge(77.,17.,1.0));
+		//Añadir aristas entre nodos que no existen
+		assertEquals(-1,gD.addEdge(888.,-1.,3.0));
+		assertEquals(-1,gD.addEdge(777.,4.,5.0));
+		assertEquals(-1,gD.addEdge(222.,5.,7.0));
+		assertEquals(-1,gD.addEdge(111.,67.,9.0));
+		assertEquals(-1,gD.addEdge(777.,17.,1.0));
+		//Añadir aristas con peso negativo
+		assertEquals(-1,gD.addEdge(2.,8.,-3.0));
+		assertEquals(-1,gD.addEdge(1.,7.,-5.0));
+		assertEquals(-1,gD.addEdge(8.,2.,-7.0));
+		assertEquals(-1,gD.addEdge(-67.,1.,-9.0));
+		assertEquals(-1,gD.addEdge(0.,77.,-1.0));
+		//Añadir una arista con nodos null
+		assertEquals(-1,gD.addEdge(null,8.,-3.0));
+		assertEquals(-1,gD.addEdge(1.,null,-5.0));
+		assertEquals(-1,gD.addEdge(null,null,-7.0));
+		//Añadir una arista entre dos nodos iguales
+		assertEquals(-1,gD.addEdge(2.,2.,-7.0));
+		
+		//STRINGS
+		
+		//Añadir aristas entre nodos que existen
+		assertEquals(0,gS.addEdge("Darth","Vader",3.0));
+		assertEquals(0,gS.addEdge("Che","Darth",3.0));
+		assertEquals(0,gS.addEdge("Vader","Darth",3.0));
+		assertEquals(0,gS.addEdge("Mi5","Vader",3.0));
+		assertEquals(0,gS.addEdge("Darth","ACAB",3.0));
+		//Sobrescribir aristas
+		assertEquals(-1,gS.addEdge("Darth","Vader",3.0));
+		assertEquals(-1,gS.addEdge("Che","Darth",3.0));
+		assertEquals(-1,gS.addEdge("Vader","Darth",3.0));
+		assertEquals(-1,gS.addEdge("Mi5","Vader",3.0));
+		assertEquals(-1,gS.addEdge("Darth","ACAB",3.0));
+		//Añadir aristas con nodos origen que no existen
+		assertEquals(-1,gS.addEdge("Dath","Vader",3.0));
+		assertEquals(-1,gS.addEdge("Ce","Darth",3.0));
+		assertEquals(-1,gS.addEdge("Vaer","Darth",3.0));
+		assertEquals(-1,gS.addEdge("M5","Vader",3.0));
+		assertEquals(-1,gS.addEdge("Drth","ACAB",3.0));
+		//Añadir aristas con nodos destino que no existen
+		assertEquals(-1,gS.addEdge("Darth","Vder",3.0));
+		assertEquals(-1,gS.addEdge("Che","Dh",3.0));
+		assertEquals(-1,gS.addEdge("Vader","Drth",3.0));
+		assertEquals(-1,gS.addEdge("Mi5","Vaer",3.0));
+		assertEquals(-1,gS.addEdge("Darth","CAB",3.0));
+		//Añadir aristas entre nodos que no existen
+		assertEquals(-1,gS.addEdge("rth","Vder",3.0));
+		assertEquals(-1,gS.addEdge("Ce","Dh",3.0));
+		assertEquals(-1,gS.addEdge("Vaer","Drth",3.0));
+		assertEquals(-1,gS.addEdge("5","Vaer",3.0));
+		assertEquals(-1,gS.addEdge("Dah","CAB",3.0));
+		//Añadir aristas con peso negativo
+		assertEquals(-1,gS.addEdge("Darth","Vader",-3.0));
+		assertEquals(-1,gS.addEdge("Che","Darth",-3.0));
+		assertEquals(-1,gS.addEdge("Vader","Darth",-3.0));
+		assertEquals(-1,gS.addEdge("Mi5","Vader",-3.0));
+		assertEquals(-1,gS.addEdge("Darth","ACAB",-3.0));
+		//Añadir una arista con nodos null
+		assertEquals(-1,gS.addEdge(null,"Vader",3.0));
+		assertEquals(-1,gS.addEdge("Che",null,3.0));
+		assertEquals(-1,gS.addEdge(null,"Darth",3.0));
+		//Añadir una arista entre dos nodos iguales
+		assertEquals(-1,gS.addEdge("Che","Che",-7.0));
+		
+		
+
+		
 		
 	}
 	
