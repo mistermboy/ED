@@ -15,6 +15,8 @@ public class GraphTest {
 	Graph<Character> gC; //Grafo de chars
 	
 	Graph<Character> gClase; //Grafo dado en clase
+	
+	Graph<Integer> gDijkstra;
 
 	@Before
 	public void initialize() {
@@ -32,6 +34,8 @@ public class GraphTest {
 		gE.addNode(21);
 		gE.addNode(0);
 		gE.addNode(-67);
+		
+		
 		
 		gD = new Graph<Double>(12);
 		
@@ -85,6 +89,27 @@ public class GraphTest {
 		gClase.addNode('C');
 		gClase.addNode('D');
 		gClase.addNode('E');
+		
+		
+		
+		gDijkstra = new Graph<Integer>(5);
+		
+		gDijkstra.addNode(0);
+		gDijkstra.addNode(1);
+		gDijkstra.addNode(2);
+		gDijkstra.addNode(3);
+		gDijkstra.addNode(4);
+		
+		gDijkstra.addEdge(0, 1,100);
+		gDijkstra.addEdge(0, 4,400);
+		gDijkstra.addEdge(0, 2,20);
+		gDijkstra.addEdge(0, 3,3);
+		gDijkstra.addEdge(1, 4,41);
+		gDijkstra.addEdge(3, 1,31);
+		gDijkstra.addEdge(2, 1,12);
+		
+
+		
 	}
 
 	/**
@@ -412,7 +437,7 @@ public class GraphTest {
 		assertEquals(-1,gE.addEdge(1,null,-5.0));
 		assertEquals(-1,gE.addEdge(null,null,-7.0));
 		//Añadir una arista entre dos nodos iguales
-		assertEquals(-1,gE.addEdge(2,2,-7.0));
+		assertEquals(-1,gE.addEdge(2,2,7.0));
 		
 		//DOUBLES
 		
@@ -457,7 +482,7 @@ public class GraphTest {
 		assertEquals(-1,gD.addEdge(1.,null,-5.0));
 		assertEquals(-1,gD.addEdge(null,null,-7.0));
 		//Añadir una arista entre dos nodos iguales
-		assertEquals(-1,gD.addEdge(2.,2.,-7.0));
+		assertEquals(-1,gD.addEdge(2.,2.,7.0));
 		
 		//STRINGS
 		
@@ -502,12 +527,55 @@ public class GraphTest {
 		assertEquals(-1,gS.addEdge("Che",null,3.0));
 		assertEquals(-1,gS.addEdge(null,"Darth",3.0));
 		//Añadir una arista entre dos nodos iguales
-		assertEquals(-1,gS.addEdge("Che","Che",-7.0));
+		assertEquals(-1,gS.addEdge("Che","Che",7.0));
 		
 		
+		//CHARACTERS
+		
+		//Añadir aristas entre nodos que existen
+		assertEquals(0,gC.addEdge('T','S',3.0));
+		assertEquals(0,gC.addEdge('S','T',3.0));
+		assertEquals(0,gC.addEdge('P','A',3.0));
+		assertEquals(0,gC.addEdge('A','U',3.0));
+		assertEquals(0,gC.addEdge('L','I',3.0));
+		//Sobrescribir aristas
+		assertEquals(-1,gC.addEdge('T','S',3.0));
+		assertEquals(-1,gC.addEdge('S','T',3.0));
+		assertEquals(-1,gC.addEdge('P','A',3.0));
+		assertEquals(-1,gC.addEdge('A','U',3.0));
+		assertEquals(-1,gC.addEdge('L','I',3.0));
+		//Añadir aristas con nodos origen que no existen
+		assertEquals(-1,gC.addEdge('Q','S',3.0));
+		assertEquals(-1,gC.addEdge('Ñ','T',3.0));
+		assertEquals(-1,gC.addEdge('N','A',3.0));
+		assertEquals(-1,gC.addEdge('V','U',3.0));
+		assertEquals(-1,gC.addEdge('W','I',3.0));
+		//Añadir aristas con nodos destino que no existen
+		assertEquals(-1,gC.addEdge('T','Q',3.0));
+		assertEquals(-1,gC.addEdge('S','Ñ',3.0));
+		assertEquals(-1,gC.addEdge('P','N',3.0));
+		assertEquals(-1,gC.addEdge('A','V',3.0));
+		assertEquals(-1,gC.addEdge('L','W',3.0));
+		//Añadir aristas entre nodos que no existen
+		assertEquals(-1,gC.addEdge('W','Q',3.0));
+		assertEquals(-1,gC.addEdge('V','Ñ',3.0));
+		assertEquals(-1,gC.addEdge('K','N',3.0));
+		assertEquals(-1,gC.addEdge('Ñ','R',3.0));
+		assertEquals(-1,gC.addEdge('Q','W',3.0));
+		//Añadir aristas con peso negativo
+		assertEquals(-1,gC.addEdge('T','S',-3.0));
+		assertEquals(-1,gC.addEdge('S','T',-3.0));
+		assertEquals(-1,gC.addEdge('P','A',-3.0));
+		assertEquals(-1,gC.addEdge('A','U',-3.0));
+		assertEquals(-1,gC.addEdge('L','I',-3.0));
+		//Añadir una arista con nodos null
+		assertEquals(-1,gC.addEdge(null,'S',3.0));
+		assertEquals(-1,gC.addEdge('S',null,3.0));
+		assertEquals(-1,gC.addEdge(null,null,3.0));
 
-		
-		
+		//Añadir una arista entre dos nodos iguales
+		assertEquals(-1,gC.addEdge('S','S',7.0));
+
 	}
 	
 
@@ -705,6 +773,85 @@ public class GraphTest {
 	}
 
 	
+	/**
+	 * Pruebas para el algortimo dijkstra
+	 */
+	@Test
+	public <T> void testDijsktra() {
 
+		// Ejemplo Dijkstra clase, empezando por el nodo 0
+
+		assertArrayEquals(new double[] { Double.POSITIVE_INFINITY, 32.0, 20.0, 3.0, 73.0 }, gDijkstra.dijkstra(0),
+				0.0001);
+
+		// Ejemplo teoría Dijkstra empezando desde el nodo 1
+		Graph<Integer> graph2 = new Graph<Integer>(6);
+
+		graph2.addNode(1);
+		graph2.addNode(2);
+		graph2.addNode(3);
+		graph2.addNode(4);
+		graph2.addNode(5);
+		graph2.addNode(6);
+
+		graph2.addEdge(1, 2, 3);
+		graph2.addEdge(1, 3, 4);
+		graph2.addEdge(1, 5, 8);
+		graph2.addEdge(2, 5, 5);
+		graph2.addEdge(3, 5, 3);
+		graph2.addEdge(5, 4, 7);
+		graph2.addEdge(5, 6, 3);
+		graph2.addEdge(6, 4, 2);
+
+		assertArrayEquals(new double[] { Double.POSITIVE_INFINITY, 3.0, 4.0, 12.0, 7.0, 10.0 }, graph2.dijkstra(1),
+				0.0001);
+
+		// Ejemplo teoría de Dijkstra empezando desde el nodo 0
+		Graph<Integer> graph3 = new Graph<Integer>(6);
+
+		graph3.addNode(0);
+		graph3.addNode(1);
+		graph3.addNode(2);
+		graph3.addNode(3);
+
+		graph3.addEdge(0, 1, 4);
+		graph3.addEdge(1, 2, 1);
+		graph3.addEdge(0, 3, 1);
+		graph3.addEdge(3, 1, 2);
+		graph3.addEdge(3, 2, 4);
+
+		assertArrayEquals(new double[] { Double.POSITIVE_INFINITY, 3.0, 4.0, 1.0 }, graph3.dijkstra(0), 0.0001);
+
+		// Ejemplo de teoría de Dijkstra empezando desde el nodo 0
+
+		Graph<Integer> graph4 = new Graph<Integer>(6);
+
+		graph4.addNode(0);
+		graph4.addNode(1);
+		graph4.addNode(2);
+		graph4.addNode(3);
+		graph4.addNode(4);
+
+		graph4.addEdge(0, 4, 10);
+		graph4.addEdge(0, 1, 1);
+		graph4.addEdge(0, 3, 3);
+		graph4.addEdge(1, 2, 5);
+		graph4.addEdge(2, 4, 1);
+		graph4.addEdge(3, 2, 2);
+		graph4.addEdge(3, 4, 6);
+
+		assertArrayEquals(new double[] { Double.POSITIVE_INFINITY, 1.0, 5.0, 3.0, 6.0 }, graph4.dijkstra(0), 0.0001);
+
+		// Test null
+		Graph<Integer> graph5 = new Graph<Integer>(6);
+		assertArrayEquals(null, graph5.dijkstra(null), 0.0001);
+
+	}
+	
+	
+	@Test
+	public <T> void testMinCostPath() {
+		assertEquals(4,gDijkstra.minCostPath(1, 5),0.1);
+	}
 	
 }

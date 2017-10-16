@@ -9,6 +9,10 @@ public class Graph<T> {
 	private double[][] weights;		//Matriz de pesos
 	int numNodes;
 	
+	//Matrices para floyd
+	private double[][] A;
+	private T[][] P;
+	
 	
 	@SuppressWarnings("unchecked")
 	public Graph(int tam) {
@@ -16,6 +20,10 @@ public class Graph<T> {
 		edges = new boolean[tam][tam];
 		weights = new double[tam][tam];
 		numNodes=0;
+		
+		//Floyd
+		A = new double[tam][tam];
+		P = (T[][]) new Object[tam][tam];
 	}
 	
 	
@@ -61,7 +69,14 @@ public class Graph<T> {
 		if (node != null) {
 			if (getNode(node) == -1 && numNodes < nodes.length) {
 				nodes[numNodes] = node;
+				for(int i=0; i<numNodes ; i++){
+	    			edges[i][numNodes]=false;
+	    			edges[numNodes][i]=false;
+	    			weights[numNodes][i]=Double.POSITIVE_INFINITY;
+	    			weights[i][numNodes]=Double.POSITIVE_INFINITY;
+	    		}
 				numNodes++;
+				inicializaFloyd();
 				return 0;
 			}
 		}
@@ -95,6 +110,7 @@ public class Graph<T> {
 					edges[index][index] = edges[numNodes][numNodes];
 					weights[index][index] = weights[numNodes][numNodes];
 					remove = 0;
+					inicializaFloyd();
 				}
 			}
 		}
@@ -153,9 +169,10 @@ public class Graph<T> {
 			if(edgeWeight > 0) {
 				int sourceNode = getNode(source);
 				int targetNode = getNode(target);
-				if (sourceNode != -1 && targetNode != -1 && !existEdge(source, target)) {
+				if (sourceNode != -1 && targetNode != -1 && !existEdge(source, target) && sourceNode!=targetNode) {
 					weights[sourceNode][targetNode]=edgeWeight;
 					edges[sourceNode][targetNode]=true;
+					inicializaFloyd();
 					return 0;
 				}
 			}
@@ -180,6 +197,7 @@ public class Graph<T> {
 			edges[nodeOrigen][nodeDestino] = false;
 			weights[nodeOrigen][nodeDestino] = 0.0;
 			remove = 0;
+			inicializaFloyd();
 		}
 		return remove;
 	}
@@ -224,28 +242,27 @@ public class Graph<T> {
 		double[] D = new double[numNodes];
 		double[] P = new double[numNodes];
 		boolean[] V = new boolean[numNodes];
-		
-		
+
 		int inicio = getNode(nodoOrigen);
-		if(nodoOrigen==null || inicio==-1) {
+		if (nodoOrigen == null || inicio == -1) {
 			return null;
 		}
-		
-		for(int i=0;i<numNodes;i++) {
-			V[i]=false;
-			if(i==inicio) {
-				D[i]=0.0;
-				P[i]=-1;
-				V[i]=true;
-			}else if(existEdge(nodoOrigen,nodes[i])) {
-				D[i]=getEdge(nodoOrigen, nodes[i]);
-				P[i]=inicio;
-			}else {
-				D[i]=Double.POSITIVE_INFINITY;
-				P[i]=-1;
+
+		for (int i = 0; i < numNodes; i++) {
+			V[i] = false;
+			if (inicio == i) {
+				D[i] = 0.0;
+				P[i] = -1;
+				V[i] = true;
+			} else if (existEdge(nodoOrigen, nodes[i])) {
+				D[i] = getEdge(nodoOrigen, nodes[i]);
+				P[i] = inicio;
+			} else {
+				D[i] = Double.POSITIVE_INFINITY;
+				P[i] = -1;
 			}
 		}
-		
+
 		for (int i = 0; i < numNodes; i++) {
 
 			int w = minCost(D, V);
@@ -253,18 +270,21 @@ public class Graph<T> {
 				V[w] = true;
 				for (int m = 0; m < numNodes; m++) {
 					if (edges[w][m]) {
-						if (D[w] + weights[w][m] < D[i]) {
-							D[i] = D[w] + weights[w][m];
-							P[i] = w;
+						if (D[w] + weights[w][m] < D[m]) {
+							D[m] = D[w] + weights[w][m];
+							P[m] = w;
 						}
 					}
-
 				}
 			}
 		}
-		return D;
 
+		D[getNode(nodoOrigen)] = Double.POSITIVE_INFINITY;
+
+		return D;
 	}
+	
+	
 	
 	
 	private int minCost(double[] d, boolean[] v) {
@@ -277,6 +297,92 @@ public class Graph<T> {
 			}
 		}
 		return index;
+	}
+
+	/**
+	 * Genera A y P Devuelve 0 si genera las dos matrices y -1 si el tamaño del
+	 * grafo es menor o igual a 1
+	 * 
+	 * @return
+	 */
+	public int floyd() {
+		inicializaFloyd();
+		if (nodes.length <= 1) {
+			return -1;
+		}
+
+		A = weights;
+
+		for (int k = 0; k < numNodes; k++) {
+			for (int i = 0; i < numNodes; i++) {
+				for (int j = 0; j < numNodes; j++) {
+					if (weights[i][k] + weights[k][j] < A[i][j]) {
+						A[i][j] = weights[i][k] + weights[k][j];
+						P[i][j] = nodes[k];
+					}
+				}
+			}
+		}
+		return 0;
+	}
+	
+	
+	
+	
+	/**
+	 *  Devuelve el coste mínimo del camino entre dos nodos que se pasan como parámetros, 
+	 *  usando la matriz de floyd, o -1 si no existen los nodos o no hay camino entre ellos.
+	 * @param nodoOrigen
+	 * @param nodoDestino
+	 * @return
+	 */
+	public double minCostPath(T nodoOrigen,T nodoDestino) {
+		if(nodoOrigen==null || nodoDestino==null) {
+			return -1;
+		}
+		int source = getNode(nodoOrigen);
+		int target = getNode(nodoDestino);
+		if(source != -1 && target !=-1) {  //Y si no hay camino?
+			floyd();
+			return A[source][target];
+		}
+		return -1;
+	}
+	
+	
+	/**
+	 * Devuelve el camino de coste mínimo entre 2 nodos que se pasan como parámetro usando la matriz de floyd, o
+	 * -1 si no existen los nodos o no hay camino entre ellos.
+	 * @param nodoOrigen
+	 * @param nodoDestino
+	 * @return
+	 */
+	public String path(T nodoOrigen,T nodoDestino) {
+		return null;
+	
+		//Si el nodo origen es igual al nodoDestino
+		//nodoOrigen
+		
+		//Si no hay camino entre los nodos
+		//nodoOrigen(Infinito)nodoDestino
+		
+		//Si hay camino
+		//nodoOrigen<tab>(cost0)<tab>Intermedio1<tab>(coste1)<tab>...
+		//Intermedio1<tab>(coste1)<tab>nodoDestino
+	}
+	
+	
+	
+	/**
+	 * Inicializa las matrices A y P de floyd
+	 */
+	private void inicializaFloyd() {
+		for(int i=0;i<numNodes;i++) {
+			for(int j=0;j<numNodes;j++) {
+				A[i][j] = Float.POSITIVE_INFINITY;
+				P[i][j] =null;
+			}
+		}
 	}
 
 
@@ -306,6 +412,21 @@ public class Graph<T> {
 		edges = new boolean[edges.length][edges.length];
 		weights = new double[weights.length][weights.length];
 		numNodes=0;
+	}
+
+	
+	/**
+	 * @return Devuelve la matriz A de floyd
+	 */
+	public double[][] getFloydA() {
+		return A;
+	}
+	
+	/**
+	 * @return Devuelve la matriz P de floyd
+	 */
+	public T[][] getFloydP() {
+		return P;
 	}
 	
 }
