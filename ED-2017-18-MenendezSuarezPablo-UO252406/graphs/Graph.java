@@ -9,6 +9,7 @@ public class Graph<T> {
 	private double[][] weights;		//Matriz de pesos
 	int numNodes;
 	
+	//Comentario de prueba
 	
 	public Graph(int tam) {
 		nodes =  (T[]) new Object[tam];
