@@ -1,10 +1,8 @@
 package algorithms;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
-import java.util.Locale;
-
-import javax.swing.text.DefaultEditorKit.CutAction;
 
 public class TestBench {
 	
