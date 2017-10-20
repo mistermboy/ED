@@ -16,7 +16,8 @@ public class GraphTest {
 	
 	Graph<Character> gClase; //Grafo dado en clase
 	
-	Graph<Integer> gDijkstra;
+	Graph<Integer> gDijkstra;//Grafo para Dijkstra
+	Graph<Integer> gFloyd;//Grafo para Floyd
 
 	@Before
 	public void initialize() {
@@ -108,7 +109,26 @@ public class GraphTest {
 		gDijkstra.addEdge(3, 1,31);
 		gDijkstra.addEdge(2, 1,12);
 		
-
+		
+		
+		gFloyd = new Graph<Integer>(6);
+		
+		gFloyd.addNode(1);
+		gFloyd.addNode(2);
+		gFloyd.addNode(3);
+		gFloyd.addNode(4);
+		gFloyd.addNode(5);
+		gFloyd.addNode(6);
+		
+		gFloyd.addEdge(1, 2,3);
+		gFloyd.addEdge(1, 3,4);
+		gFloyd.addEdge(1, 5,8);
+		gFloyd.addEdge(2, 5,5);
+		gFloyd.addEdge(3, 5,3);
+		gFloyd.addEdge(5, 4,7);
+		gFloyd.addEdge(5, 6,3);
+		gFloyd.addEdge(6, 4,2);
+		
 		
 	}
 
@@ -850,8 +870,83 @@ public class GraphTest {
 	
 	
 	@Test
-	public <T> void testMinCostPath() {
-		assertEquals(4,gDijkstra.minCostPath(1, 5),0.1);
+	public <T> void floyd() {
+		
+		//gFloyd
+		assertEquals(0,gFloyd.floyd());
+		assertArrayEquals(new double[][]{{0.0,3.0, 4.0, 12.0, 7.0,10.0},
+		{Double.POSITIVE_INFINITY,0.0,Double.POSITIVE_INFINITY, 10.0, 5.0,8.0},
+		{Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY,0.0, 8.0, 3.0,6.0},
+		{Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY, 0.0,Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY},
+		{Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY, 5.0,0.0,3.0},
+		{Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY, 2.0,Double.POSITIVE_INFINITY,0.0} },gFloyd.getFloydA());
+		assertArrayEquals(new Object[][] { { null, null, null, 6, 3, 5 },
+		{ null, null, null, 6, null, 5 },{ null, null, null, 6, null, 5 }, 
+		{ null, null, null, null, null, null },{ null, null, null, 6, null, null },
+		{ null, null, null, null, null, null }},gFloyd.getFloydP());
+		
+		
+			//Ejemplo floyd Prácticas
+			Graph<Integer> graph = new Graph<Integer>(5);
+			
+			graph.addNode(0);
+			graph.addNode(1);
+			graph.addNode(2);
+			graph.addNode(3);
+			graph.addNode(4);
+			
+			graph.addEdge(0, 1,100);
+			graph.addEdge(0, 4,400);
+			graph.addEdge(0, 2,20);
+			graph.addEdge(0, 3,3);
+			graph.addEdge(1, 4,41);
+			graph.addEdge(3, 1,31);
+			graph.addEdge(2, 1,12);
+			
+			
+			assertEquals(0,graph.floyd());
+			assertArrayEquals(new double[][]{{0.0,32.0, 20.0, 3.0, 73.0},
+			{Double.POSITIVE_INFINITY,0.0,Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, 41.0},
+			{Double.POSITIVE_INFINITY,12.0,0.0, Double.POSITIVE_INFINITY, 53.0},
+			{Double.POSITIVE_INFINITY,31.0,Double.POSITIVE_INFINITY, 0.0,72.0},
+			{Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY,0.0} },graph.getFloydA());
+			assertArrayEquals(new Object[][] { { null, 2, null, null, 2},
+			{ null, null, null, null, null},{ null, null, null, null, 1}, 
+			{ null, null, null, null, 1},{ null, null, null, null, null}},graph.getFloydP());
+			
 	}
+	
+	
+	/**
+	 * Pruebas para el método minCostPath
+	 */
+	@Test
+	public <T> void testMinCostPath() {
+
+		assertEquals(3., gFloyd.minCostPath(1, 2), 0.1);
+		assertEquals(5., gFloyd.minCostPath(2, 5), 0.1);
+		assertEquals(12., gFloyd.minCostPath(1, 4), 0.1);
+		assertEquals(5., gFloyd.minCostPath(2, 5), 0.1);
+		assertEquals(3., gFloyd.minCostPath(5, 6), 0.1);
+
+		// Cuando no hay camino
+		assertEquals(-1, gFloyd.minCostPath(4, 1), 0.1);
+		// Cuando no existe el nodo inicial
+		assertEquals(-1, gFloyd.minCostPath(8, 1), 0.1);
+		// Cuando no existe el nodo destino
+		assertEquals(-1, gFloyd.minCostPath(1, 8), 0.1);
+		// Cuando no existen ambos nodos
+		assertEquals(-1, gFloyd.minCostPath(8, 8), 0.1);
+		// Nodo inicial null
+		assertEquals(-1, gFloyd.minCostPath(null, 1), 0.1);
+		// Nodo destino null
+		assertEquals(-1, gFloyd.minCostPath(1, null), 0.1);
+		// Ambos nodos null null
+		assertEquals(-1, gFloyd.minCostPath(null, null), 0.1);
+
+	}
+	
+	
+	
 	
 }

@@ -14,6 +14,7 @@ public class Graph<T> {
 	private T[][] P;
 	
 	
+	
 	@SuppressWarnings("unchecked")
 	public Graph(int tam) {
 		nodes =  (T[]) new Object[tam];
@@ -306,7 +307,6 @@ public class Graph<T> {
 	 * @return
 	 */
 	public int floyd() {
-		inicializaFloyd();
 		if (nodes.length <= 1) {
 			return -1;
 		}
@@ -328,7 +328,6 @@ public class Graph<T> {
 	
 	
 	
-	
 	/**
 	 *  Devuelve el coste mínimo del camino entre dos nodos que se pasan como parámetros, 
 	 *  usando la matriz de floyd, o -1 si no existen los nodos o no hay camino entre ellos.
@@ -342,9 +341,12 @@ public class Graph<T> {
 		}
 		int source = getNode(nodoOrigen);
 		int target = getNode(nodoDestino);
-		if(source != -1 && target !=-1) {  //Y si no hay camino?
+		if(source != -1 && target !=-1) { 
 			floyd();
-			return A[source][target];
+			if(A[source][target]!=Double.POSITIVE_INFINITY) {
+				return A[source][target];
+			}
+			
 		}
 		return -1;
 	}
@@ -379,7 +381,7 @@ public class Graph<T> {
 	private void inicializaFloyd() {
 		for(int i=0;i<numNodes;i++) {
 			for(int j=0;j<numNodes;j++) {
-				A[i][j] = Float.POSITIVE_INFINITY;
+				A[i][j] = Double.POSITIVE_INFINITY;
 				P[i][j] =null;
 			}
 		}
@@ -428,5 +430,5 @@ public class Graph<T> {
 	public T[][] getFloydP() {
 		return P;
 	}
-	
+		
 }
