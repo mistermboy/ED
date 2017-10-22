@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import graphs.Graph;
-import graphs.preraringExam;
 
 public class GraphTest {
 	
