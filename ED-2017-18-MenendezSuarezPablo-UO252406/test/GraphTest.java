@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import graphs.Graph;
+import graphs.preraringExam;
 
 public class GraphTest {
 	
@@ -953,42 +954,46 @@ public class GraphTest {
 	 * Pruebas para el método path
 	 */
 	@Test
-	public <T> void testPath(){
-		
-		//Mostrar el camino entre nodos cuando existe camino
+	public <T> void testPath() {
+
+		// Mostrar el camino entre nodos cuando existe camino
 		assertEquals("1	(4.0)	3	(3.0)	5	(3.0)	6	(2.0)	4", gFloyd.path(1, 4));
 		assertEquals("1	(3.0)	2", gFloyd.path(1, 2));
 		assertEquals("6	(2.0)	4", gFloyd.path(6, 4));
 		assertEquals("1	(4.0)	3", gFloyd.path(1, 3));
-		
-		//Mostrar el camino entre nodos cuando n existe camino
+
+		// Mostrar el camino entre nodos cuando n existe camino
 		assertEquals("6(Infinito)5", gFloyd.path(6, 5));
 		assertEquals("3(Infinito)2", gFloyd.path(3, 2));
-		
-		//Mostrar el camino entre dos nodos iguales
+
+		// Mostrar el camino entre dos nodos iguales
 		assertEquals("1", gFloyd.path(1, 1));
-		
-		//Mostrar el camino entre un nodo inicial inexistente y un nodo destino existente
+
+		// Mostrar el camino entre un nodo inicial inexistente y un nodo destino
+		// existente
 		assertEquals(null, gFloyd.path(666, 1));
-		//Mostrar el camino entre un nodo inicial existente y un nodo destino inexistente
+		// Mostrar el camino entre un nodo inicial existente y un nodo destino
+		// inexistente
 		assertEquals(null, gFloyd.path(1, 666));
-		//Mostrar el camino entre nodos inexistentes
-		assertEquals(null, gFloyd.path(666,999));
-		//Mostrar el camino entre un nodo inicial null y un nodo destino existente
-		assertEquals(null, gFloyd.path(null,1));
-		//Mostrar el camino entre un nodo inicial existente y un nodo destino null
-		assertEquals(null, gFloyd.path(1,null));
-		//Mostrar el camino entre dos nodos null
-		assertEquals(null, gFloyd.path(null,null));
-		
-//		System.out.println(gFloyd.path(1, 4));
-//		System.out.println(gFloyd.path(1, 2));
-//		System.out.println(gFloyd.path(1, 1));
-//		System.out.println(gFloyd.path(6, 5));
-//		System.out.println(gFloyd.path(6, 4));
-//		System.out.println(gFloyd.path(1, 3));
-//		System.out.println(gFloyd.path(3, 2));
-		
+		// Mostrar el camino entre nodos inexistentes
+		assertEquals(null, gFloyd.path(666, 999));
+		// Mostrar el camino entre un nodo inicial null y un nodo destino
+		// existente
+		assertEquals(null, gFloyd.path(null, 1));
+		// Mostrar el camino entre un nodo inicial existente y un nodo destino
+		// null
+		assertEquals(null, gFloyd.path(1, null));
+		// Mostrar el camino entre dos nodos null
+		assertEquals(null, gFloyd.path(null, null));
+
+		// System.out.println(gFloyd.path(1, 4));
+		// System.out.println(gFloyd.path(1, 2));
+		// System.out.println(gFloyd.path(1, 1));
+		// System.out.println(gFloyd.path(6, 5));
+		// System.out.println(gFloyd.path(6, 4));
+		// System.out.println(gFloyd.path(1, 3));
+		// System.out.println(gFloyd.path(3, 2));
+
 	}
-	
+
 }

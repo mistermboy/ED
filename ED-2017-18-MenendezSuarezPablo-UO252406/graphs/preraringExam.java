@@ -2,7 +2,7 @@ package graphs;
 
 import java.text.DecimalFormat;
 
-public class Graph<T> {
+public class preraringExam<T> {
 
 	private T[] nodes;  //Array de nodos
 	private boolean [][] edges;  //Matriz de ejes
@@ -16,7 +16,7 @@ public class Graph<T> {
 	
 	
 	@SuppressWarnings("unchecked")
-	public Graph(int tam) {
+	public preraringExam(int tam) {
 		nodes =  (T[]) new Object[tam];
 		edges = new boolean[tam][tam];
 		weights = new double[tam][tam];
@@ -467,4 +467,254 @@ public class Graph<T> {
 		return P;
 	}
 	
+	/**
+	 * Metodo que indica si el grafo es fuertemente conexo(conexion de todos los
+	 * nodos con todos)
+	 * 
+	 * @return true si el grafo es fuertemente conexo y false en caso contrario
+	 */
+	public boolean isStronglyConnected() {
+		floyd();
+		for (int source = 0; source < numNodes; source++) {
+			for (int target = 0; target < numNodes; target++) {
+
+				if (P[source][target] == null
+						&& !existEdge(nodes[source], nodes[target])) {
+					return false;
+				}
+
+			}
+		}
+		return true;
+
+	}
+	
+	/**
+	 * Metodo que calcula el grado total de un nodo
+	 * 
+	 * @param nodo
+	 *            para calcular su grado
+	 * @return grado de dicho nodo
+	 */
+	public int gradoDeUnNodo(T nodo) {
+		if (nodo == null || !existNode(nodo)) {
+			return -1;
+		}
+
+		int grado = 0;
+		floyd();
+		for (int i = 0; i < numNodes; i++) {
+			if (edges[getNode(nodo)][i]) {
+				grado++;
+			} else if (edges[i][getNode(nodo)]) {
+				grado++;
+			}
+		}
+		return grado;
+	}
+	
+	/** 
+	 * Método que devuelve si un nodo es fuertemente conexo. Es decir, si desde este nodo
+	 * podemos llegar o no hasta todos los demás.
+	 * Para ello usamos la matriz que nos devuelve floyd.
+	 * @param sourcenode el nodo que queremos analizar 
+	 * @return true si lo es, false en caso contrario.
+	 */
+	public boolean nodoFuertementeConexo(T source) {
+		if (source == null || !existNode(source)) {
+			return false;
+		}
+		floyd();
+		int nodo = getNode(source);
+		for (int i = 0; i < numNodes; i++) {
+			if(A[nodo][i]==Double.POSITIVE_INFINITY){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Calcula la excentricidad de un nodo. El valor máximo de las longitudes mínimas de los caminos 
+	 * desde todos los nodos hasta el nodo source. 
+	 * @param source nodo a calcular la excentricidad
+	 * @return la excentricidad
+	 */
+	public double excentricidad (T source) {
+		double excentricity=-1;
+		floyd();
+		if(source!=null && existNode(source)){
+			for(int i=0;i<numNodes;i++){
+				if(A[i][getNode(source)]>excentricity){
+					excentricity=A[i][getNode(source)];
+				}
+			}
+		}
+		return excentricity;
+	}
+	
+	/**
+	 * Calcula el centro del grafo. 
+	 * Será el nodo más cercano al nodo más distante. Para saber el nodo más distante buscamos
+	 * la menor excentricidad.
+	 * @return el identificador dentro del vector de nodos que es el centro del grafo.
+	 */
+	public int centro () {
+		floyd();
+		int masDistante=-1;
+		double minExcentricity=Double.POSITIVE_INFINITY;
+		for(int i=0;i<numNodes;i++){
+			if(excentricidad(nodes[i])<minExcentricity){
+				minExcentricity=excentricidad(nodes[i]);
+				masDistante=i;
+			}
+		}
+		int centro=0;
+		double distance=Double.POSITIVE_INFINITY;
+		for(int i=0;i<numNodes;i++){
+			if(A[i][masDistante]<distance){
+				distance=A[i][masDistante];
+				centro = i;
+			}
+		}
+		return centro;
+	}
+	
+	/**
+	 * Número de aristas que tienen al nodo como destino
+	 * @param sourcenode nodo para calcular su grado de entrada
+	 * @return el grado de entrada (int)
+	 */
+	public int gradoEntrada (T source)
+	{
+		if(source==null || !existNode(source)){
+			return -1;
+		}
+		int numAristas=0;
+		for(int i=0;i<numNodes;i++){
+			if(edges[i][getNode(source)]){
+				numAristas++;
+			}
+		}
+		return numAristas;
+		
+		
+		
+	}
+	
+	/**
+	 * Número de aristas que tienen al nodo como destino
+	 * @param sourcenode nodo para calcular su grado de entrada
+	 * @return el grado de entrada (int)
+	 */
+	public int gradoSalida (T source)
+	{
+		if(source==null || !existNode(source)){
+			return -1;
+		}
+		int numAristas=0;
+		for(int i=0;i<numNodes;i++){
+			if(edges[getNode(source)][i]){
+				numAristas++;
+			}
+		}
+		return numAristas;
+		
+		
+	}
+	
+	/**
+	 * Si su grado de salida es mayor que cero y el grado de entrada 0
+	 * @param source el nodo a calcular
+	 * @return true en caso de serlo, falso si no
+	 */
+	public boolean esNodoFuente (T source) {
+		if(source==null || !existNode(source)){
+			return false;
+		}
+		
+		int gradoEntrada=0;
+		for(int i=0;i<numNodes;i++){
+			if(edges[i][getNode(source)]){
+				gradoEntrada++;
+			}
+		}
+		if(gradoEntrada==0){
+			int gradoSalida=0;
+			for(int i=0;i<numNodes;i++){
+				if(edges[getNode(source)][i]){
+					gradoSalida++;
+				}
+			}
+			if(gradoSalida>0){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Si su grado de entrada es mayor que cero y el grado de salida 0
+	 * @param source el nodo a calcular
+	 * @return true en caso de serlo, falso si no
+	 */
+	public boolean esNodoSumidero (T source) {
+		if(source==null || !existNode(source)){
+			return false;
+		}
+		
+		int gradoEntrada=0;
+		for(int i=0;i<numNodes;i++){
+			if(edges[i][getNode(source)]){
+				gradoEntrada++;
+			}
+		}
+		if(gradoEntrada>0){
+			int gradoSalida=0;
+			for(int i=0;i<numNodes;i++){
+				if(edges[getNode(source)][i]){
+					gradoSalida++;
+				}
+			}
+			if(gradoSalida==0){
+				return true;
+			}
+		}
+		return false;
+	
+	}
+	
+	/**
+	 * Si su grado de entrada y salida son 0 ambos
+	 * @param source el nodo a calcular
+	 * @return true en caso de serlo, falso si no
+	 */
+	public boolean esNodoAislado (T source) {
+		return gradoEntrada(source)==0 && gradoSalida(source)==0;
+	}
+	
+	/**
+	 * Método que calcula si un nodo es el inicial del grafo. Para ser el nodo inicial de él tiene que salir algún vértice y no llegar 
+	 * ninguno.
+	 * @param source el nodo que se quiere saber si es el inicial.
+	 * @return true en caso de serlo false si no.
+	 */
+	public boolean esNodoInicial(T source) {
+		if (source != null || existNode(source)) {
+
+			for (int i = 0; i < numNodes; i++) {
+				if (edges[i][getNode(source)]) {
+					return false;
+				}
+			}
+			for (int i = 0; i < numNodes; i++) {
+				if (edges[getNode(source)][i]) {
+					return true;
+				}
+			}
+		}
+		return false;
+
+	}
+		
 }
