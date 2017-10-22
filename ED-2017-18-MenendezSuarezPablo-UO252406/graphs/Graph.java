@@ -353,26 +353,62 @@ public class Graph<T> {
 	
 	
 	/**
-	 * Devuelve el camino de coste mínimo entre 2 nodos que se pasan como parámetro usando la matriz de floyd, o
-	 * -1 si no existen los nodos o no hay camino entre ellos.
+	 * Devuelve el camino de coste mínimo entre 2 nodos que se pasan como
+	 * parámetro usando la matriz de floyd, o -1 si no existen los nodos o no
+	 * hay camino entre ellos.
+	 * 
 	 * @param nodoOrigen
 	 * @param nodoDestino
-	 * @return
+	 * @return camino de coste mínimo
 	 */
-	public String path(T nodoOrigen,T nodoDestino) {
-		return null;
-	
-		//Si el nodo origen es igual al nodoDestino
-		//nodoOrigen
-		
-		//Si no hay camino entre los nodos
-		//nodoOrigen(Infinito)nodoDestino
-		
-		//Si hay camino
-		//nodoOrigen<tab>(cost0)<tab>Intermedio1<tab>(coste1)<tab>...
-		//Intermedio1<tab>(coste1)<tab>nodoDestino
+	public String path(T nodoOrigen, T nodoDestino) {
+		if (nodoOrigen == null || nodoDestino == null) {
+			return null;
+		}
+
+		floyd();
+		int source = getNode(nodoOrigen);
+		int target = getNode(nodoDestino);
+		if (source == -1 || target == -1) {
+			return null;
+		}
+
+		// Si el nodo origen es igual al nodoDestino
+		// nodoOrigen
+
+		if (nodoOrigen.equals(nodoDestino)) {
+			return nodoOrigen.toString();
+		}
+
+		// Si no hay camino entre los nodos
+		// nodoOrigen(Infinito)nodoDestino
+		if (P[source][target] == null && !existEdge(nodoOrigen, nodoDestino)) {
+			return nodoOrigen.toString() + "(Infinito)"
+					+ nodoDestino.toString();
+		}
+
+		// Si hay camino
+		// nodoOrigen<tab>(cost0)<tab>Intermedio1<tab>(coste1)<tab>...
+		// Intermedio1<tab>(coste1)<tab>nodoDestino
+		return printPaht(nodoOrigen, nodoDestino);
+
 	}
 	
+	
+	private String printPaht(T nodoOrigen, T nodoDestino) {
+		if (nodoOrigen.equals(nodoDestino)) {
+			return nodoOrigen.toString();
+		}
+
+		int start = getNode(nodoOrigen);
+		int end = getNode(nodoDestino);
+		T step = P[start][end];
+		if (step == null && edges[start][end])
+			step = nodes[start];
+		return printPaht(nodoOrigen, step) + "\t("
+				+ weights[getNode(step)][getNode(nodoDestino)] + ")\t"
+				+ nodes[end].toString();
+	}
 	
 	
 	/**
