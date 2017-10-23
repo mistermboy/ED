@@ -17,14 +17,16 @@ public class Graph<T> {
 	
 	@SuppressWarnings("unchecked")
 	public Graph(int tam) {
-		nodes =  (T[]) new Object[tam];
-		edges = new boolean[tam][tam];
-		weights = new double[tam][tam];
-		numNodes=0;
-		
-		//Floyd
-		A = new double[tam][tam];
-		P = (T[][]) new Object[tam][tam];
+		if (tam > 0) {
+			nodes = (T[]) new Object[tam];
+			edges = new boolean[tam][tam];
+			weights = new double[tam][tam];
+			numNodes = 0;
+
+			// Floyd
+			A = new double[tam][tam];
+			P = (T[][]) new Object[tam][tam];
+		}
 	}
 	
 	
