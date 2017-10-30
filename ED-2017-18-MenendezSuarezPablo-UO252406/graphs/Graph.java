@@ -13,6 +13,8 @@ public class Graph<T> {
 	private double[][] A;
 	private T[][] P;
 	
+	//Exam
+	private double[][] longitudes;
 	
 	
 	@SuppressWarnings("unchecked")
@@ -467,6 +469,94 @@ public class Graph<T> {
 	 */
 	public T[][] getFloydP() {
 		return P;
+	}
+	
+	
+	//=============================	EXAM ============================================ 
+	
+	public double longitudCamino(T origen, T destino) {
+		if(origen==null || !existNode(origen) || destino==null || !existNode(destino)) {
+			return 0;
+		}
+		
+		int gradoOrigen = grado(origen);
+		int gradoDestino = grado(destino);
+		if(gradoOrigen%2==0 && gradoDestino%2==0) {
+			double[] longis = longitudMinima(origen, destino);
+			return longis[getNode(destino)];
+			
+		}
+		return -1;
+	}
+
+	private int grado(T origen) {
+		int grado=0;
+		for(int i=0;i<numNodes;i++) {
+			if(edges[getNode(origen)][i]) {
+				grado++;
+			}else if(edges[i][getNode(origen)]) {
+				grado++;
+			}
+		}
+		return grado;
+	}	
+	
+	private double[] longitudMinima(T origen, T destino) {
+		longitudes = weights;
+		for(int i=0;i<numNodes;i++) {
+			for(int j=0;j<numNodes;j++) {
+				longitudes[i][j]=1;
+			}
+		}
+		return dijkstraLongitud(origen);
+		
+	}
+	
+	
+	public double[] dijkstraLongitud(T nodoOrigen) {
+		double[] D = new double[numNodes];
+		double[] P = new double[numNodes];
+		boolean[] V = new boolean[numNodes];
+
+		int inicio = getNode(nodoOrigen);
+		if (nodoOrigen == null || inicio == -1) {
+			return null;
+		}
+
+		for (int i = 0; i < numNodes; i++) {
+			V[i] = false;
+			if (inicio == i) {
+				D[i] = 0.0;
+				P[i] = -1;
+				V[i] = true;
+			} else if (existEdge(nodoOrigen, nodes[i])) {
+				D[i] = getEdge(nodoOrigen, nodes[i]);
+				P[i] = inicio;
+			} else {
+				D[i] = Double.POSITIVE_INFINITY;
+				P[i] = -1;
+			}
+		}
+
+		for (int i = 0; i < numNodes; i++) {
+
+			int w = minCost(D, V);
+			if (w != -1) {
+				V[w] = true;
+				for (int m = 0; m < numNodes; m++) {
+					if (edges[w][m]) {
+						if (D[w] + longitudes[w][m] < D[m]) {
+							D[m] = D[w] + longitudes[w][m];
+							P[m] = w;
+						}
+					}
+				}
+			}
+		}
+
+		D[getNode(nodoOrigen)] = Double.POSITIVE_INFINITY;
+
+		return D;
 	}
 	
 	
