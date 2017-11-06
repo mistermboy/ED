@@ -8,9 +8,11 @@ import graphTest.GraphDijkstraTestCharo;
 import graphTest.GraphFloydTestCharo;
 import graphTest.GraphTest;
 import graphTest.GraphTestCharo;
+import treeTest.ArbolesBinariosBoolTestCharo;
+import treeTest.BSTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({ GraphDijkstraTestCharo.class, GraphFloydTestCharo.class, GraphTest.class, GraphTestCharo.class })
+@SuiteClasses({ GraphDijkstraTestCharo.class, GraphFloydTestCharo.class, GraphTest.class, GraphTestCharo.class})
 public class AllTestsGrafos {
 
 }

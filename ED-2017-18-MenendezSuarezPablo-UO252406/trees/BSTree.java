@@ -1,19 +1,23 @@
 package trees;
 
-public class BSTree<T extends Comparable<T>>{
+public class BSTree<T extends Comparable<T>> {
 
 	private BSTNode<T> raiz;
-	
-	
+
+	private boolean remove;
+
 	public BSTree() {
 		raiz = null;
 	}
-	
-	
-	
-	//################# C O M E N T A R     T O D O ################################
-	
-	
+
+	// ################# C O M E N T A R T O D O ################################
+	// ################## J A V A   D O C   ###############################
+
+	/**
+	 * Add a node into the binary tree
+	 * @param element, node to add 
+	 * @return true if it was added correctly, false otherwise
+	 */
 	public boolean addNode(T element) {
 		if (element != null) {
 			if (raiz == null) {
@@ -26,8 +30,7 @@ public class BSTree<T extends Comparable<T>>{
 		return false;
 
 	}
-	
-	
+
 	public boolean addNodeRec(BSTNode<T> theRoot, T element) {
 
 		if (theRoot.getInfo().compareTo(element) == 0) {
@@ -50,40 +53,43 @@ public class BSTree<T extends Comparable<T>>{
 		return false;
 
 	}
-	
-	
-	
+
+	/**
+	 * Looks for the node that is indicated
+	 * @param element, searched node 
+	 * @return true if it find it, false otherwise
+	 */
 	public BSTNode<T> findNode(T element) {
-		if(element!=null) {
-			if(raiz == element) {
+		if (element != null) {
+			if (raiz == element) {
 				return raiz;
-			}else {
+			} else {
 				return findNodeRec(raiz, element);
 			}
-			
-		}		
+
+		}
 		return null;
 	}
-	
-	
-	private BSTNode<T> findNodeRec(BSTNode<T> theRoot, T element){
-		if(theRoot == null) {
+
+	private BSTNode<T> findNodeRec(BSTNode<T> theRoot, T element) {
+		if (theRoot == null) {
 			return null;
-		}else if(theRoot.getInfo().compareTo(element) > 0) {
-			return findNodeRec(theRoot.getLeft(),element);
-		}else if(theRoot.getInfo().compareTo(element) < 0) {
-			return findNodeRec(theRoot.getRight(),element);
-		}else if(theRoot.getInfo().compareTo(element) == 0) {
+		} else if (theRoot.getInfo().compareTo(element) > 0) {
+			return findNodeRec(theRoot.getLeft(), element);
+		} else if (theRoot.getInfo().compareTo(element) < 0) {
+			return findNodeRec(theRoot.getRight(), element);
+		} else if (theRoot.getInfo().compareTo(element) == 0) {
 			return theRoot;
 		}
 		return null;
 	}
-	
-	
-	
-	
+
+	/**
+	 * @return the route in pre-order
+	 */
 	public String preOrder() {
-		return preOrderRec(raiz).substring(0,preOrderRec(raiz).length()-1);
+		return preOrderRec(raiz).substring(0, preOrderRec(raiz).length() - 1);
+		
 	}
 
 	private String preOrderRec(BSTNode<T> theRoot) {
@@ -97,8 +103,11 @@ public class BSTree<T extends Comparable<T>>{
 		return pre;
 	}
 
+	/**
+	 * @return the route in post-order
+	 */
 	public String postOrder() {
-		return postOrderRec(raiz).substring(0,postOrderRec(raiz).length()-1);
+		return postOrderRec(raiz).substring(0, postOrderRec(raiz).length() - 1);
 	}
 
 	private String postOrderRec(BSTNode<T> theRoot) {
@@ -112,8 +121,11 @@ public class BSTree<T extends Comparable<T>>{
 		return post;
 	}
 
+	/**
+	 * @return the route in in-order
+	 */
 	public String inOrder() {
-		return inOrderRec(raiz).substring(0,inOrderRec(raiz).length()-1);
+		return inOrderRec(raiz).substring(0, inOrderRec(raiz).length() - 1);
 	}
 
 	private String inOrderRec(BSTNode<T> theRoot) {
@@ -126,6 +138,58 @@ public class BSTree<T extends Comparable<T>>{
 		}
 		return in;
 	}
-	
-	
+
+	/**
+	 * Remove the node that is indicated
+	 * @param element, node to add 
+	 * @return true if it was removed correctly, false otherwise
+	 */
+	public boolean removeNode(T x) {
+		if (x != null) {
+			if (findNode(x) != null) {
+				remove = false;
+				raiz = removeNodeRec(raiz, x);
+				return remove;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	private BSTNode<T> removeNodeRec(BSTNode<T> theRoot, T element) {
+		if (theRoot == null)
+			throw new RuntimeException("element does not exist!");
+		else if (element.compareTo(theRoot.getInfo()) < 0)
+			theRoot.setLeft(removeNodeRec(theRoot.getLeft(), element));
+		else if (element.compareTo(theRoot.getInfo()) > 0)
+			theRoot.setRight(removeNodeRec(theRoot.getRight(), element));
+		else {
+			if (theRoot.getLeft() == null) {
+				remove = true;
+				return theRoot.getRight();
+			} else if (theRoot.getRight() == null) {
+				remove = true;
+				return theRoot.getLeft();
+			}
+
+			else {
+				theRoot.setInfo(getMax(theRoot.getLeft()));
+				theRoot.setLeft(removeNodeRec(theRoot.getLeft(), theRoot.getInfo()));
+				remove = true;
+			}
+		}
+		return theRoot;
+	}
+
+	protected T getMax(BSTNode<T> theRoot) {
+		if (theRoot == null)
+			return null;
+		else if (theRoot.getRight() == null)
+			return theRoot.getInfo();
+		else
+			return getMax(theRoot.getRight());
+	}
+
 }

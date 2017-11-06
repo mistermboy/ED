@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import trees.BSTree;
 
-public class BSTreeTest {
+public class BSTest {
 	
 	BSTree<Integer> aT; //Add tree
 	BSTree<Integer> iT; //Integer tree
@@ -41,6 +41,8 @@ public class BSTreeTest {
 	@Test
 	public void testAddNode() {
 		
+		//Integers
+		
 		//Add valid nodes
 		assertTrue(aT.addNode(10));
 		assertTrue(aT.addNode(5));
@@ -54,10 +56,25 @@ public class BSTreeTest {
 		
 		//Add negative nodes
 		assertTrue(aT.addNode(-666));
-		//Add existing node
+		//Add an existing node
 		assertFalse(aT.addNode(-666));
-		//Add null node
+		//Add a null node
 		assertFalse(aT.addNode(null));
+		
+		
+		//Strings
+		
+		BSTree<String> stree = new BSTree<String>();
+		
+		stree.addNode("C");
+		stree.addNode("A");
+		stree.addNode("B");
+		stree.addNode("D");
+		stree.addNode("F");
+		stree.addNode("L");
+		stree.addNode("Z");
+		stree.addNode("M");
+		
 		
 	}
 		
@@ -81,9 +98,9 @@ public class BSTreeTest {
 		
 		//Search negative nodes
 		assertEquals((Integer) (-666),iT.findNode(-666).getInfo());
-		//Search non-existent node
+		//Search a non-existent node
 		assertEquals(null,iT.findNode(77));
-		//Search null node
+		//Search a null node
 		assertEquals(null,iT.findNode(null));
 	}
 	
@@ -104,5 +121,46 @@ public class BSTreeTest {
 		System.out.println(iT.inOrder());
 		
 	}
+	
+	
+	/**
+	 * Pruebas para el método remove
+	 */
+	@Test
+	public void testRemove() {
+		BSTree<Integer> tree = new BSTree<Integer>();
+
+		tree.addNode(10);
+		tree.addNode(5);
+		tree.addNode(3);
+		tree.addNode(9);
+		tree.addNode(7);
+		tree.addNode(6);
+		tree.addNode(8);
+
+		tree.addNode(14);
+		tree.addNode(12);
+		tree.addNode(16);
+
+		assertEquals(true, tree.removeNode(9));
+		assertEquals(true, tree.removeNode(8));
+		assertEquals(true, tree.removeNode(7));
+		assertEquals(true, tree.removeNode(6));
+		assertEquals(true, tree.removeNode(5));
+		assertEquals(true, tree.removeNode(3));
+		assertEquals(true, tree.removeNode(14));
+		assertEquals(true, tree.removeNode(12));
+		assertEquals(true, tree.removeNode(16));
+		assertEquals(true, tree.removeNode(10));
+
+		// Remove a null
+		assertFalse(tree.removeNode(null));
+
+		// Remove a non-existent node
+		assertFalse(tree.removeNode(27));
+
+	}
+			
+	
 	
 }
