@@ -985,7 +985,7 @@ public class GraphTest {
 		// Mostrar el camino entre dos nodos null
 		assertEquals(null, gFloyd.path(null, null));
 
-		// System.out.println(gFloyd.path(1, 4));
+		 System.out.println(gFloyd.path(1, 4));
 		// System.out.println(gFloyd.path(1, 2));
 		// System.out.println(gFloyd.path(1, 1));
 		// System.out.println(gFloyd.path(6, 5));

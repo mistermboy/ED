@@ -10,12 +10,11 @@ public class BSTree<T extends Comparable<T>> {
 		raiz = null;
 	}
 
-	// ################# C O M E N T A R T O D O ################################
-	// ################## J A V A   D O C   ###############################
-
 	/**
 	 * Add a node into the binary tree
-	 * @param element, node to add 
+	 * 
+	 * @param element,
+	 *            node to add
 	 * @return true if it was added correctly, false otherwise
 	 */
 	public boolean addNode(T element) {
@@ -56,8 +55,10 @@ public class BSTree<T extends Comparable<T>> {
 
 	/**
 	 * Looks for the node that is indicated
-	 * @param element, searched node 
-	 * @return true if it find it, false otherwise
+	 * 
+	 * @param element,
+	 *            searched node
+	 * @return searched node if it find it, null otherwise
 	 */
 	public BSTNode<T> findNode(T element) {
 		if (element != null) {
@@ -89,7 +90,7 @@ public class BSTree<T extends Comparable<T>> {
 	 */
 	public String preOrder() {
 		return preOrderRec(raiz).substring(0, preOrderRec(raiz).length() - 1);
-		
+
 	}
 
 	private String preOrderRec(BSTNode<T> theRoot) {
@@ -141,7 +142,9 @@ public class BSTree<T extends Comparable<T>> {
 
 	/**
 	 * Remove the node that is indicated
-	 * @param element, node to add 
+	 * 
+	 * @param element,
+	 *            node to add
 	 * @return true if it was removed correctly, false otherwise
 	 */
 	public boolean removeNode(T x) {
@@ -183,7 +186,7 @@ public class BSTree<T extends Comparable<T>> {
 		return theRoot;
 	}
 
-	protected T getMax(BSTNode<T> theRoot) {
+	private T getMax(BSTNode<T> theRoot) {
 		if (theRoot == null)
 			return null;
 		else if (theRoot.getRight() == null)

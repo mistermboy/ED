@@ -1,65 +1,59 @@
 package trees;
 
 public class AVLTree<T extends Comparable<T>> {
-	
+
 	private AVLNode<T> raiz;
-	
-	
+
+	private AVLNode<T> ascendiente;
+	private int numAristas;
+	private String camino;
+
 	public AVLTree() {
 		raiz = null;
 	}
-	
-	public AVLNode<T> getRaiz(){
-		return raiz;
-	}
-	
-	public T getInfoRaiz() {
-		return raiz.getInfo();
-	}
-	
-	
+
 	/**
 	 * Add a node into the AVL tree
-	 * @param element, node to add 
+	 * 
+	 * @param element,
+	 *            node to add
 	 * @return the root if it was added correctly, false otherwise
 	 */
-	public AVLNode<T> add(T element){
+	public AVLNode<T> add(T element) {
 		if (element != null) {
+			if (findNode(element) != null) {
+				return null;
+			}
 			if (raiz == null) {
 				raiz = new AVLNode<T>(element);
-				return raiz; 
 			} else {
-				return addRec(raiz, element);
+				raiz = addRec(raiz, element);
 			}
+			return raiz;
 		}
 		return null;
 	}
-	
-	
+
 	private AVLNode<T> addRec(AVLNode<T> theRoot, T element) {
 		if (theRoot == null)
 			return new AVLNode<T>(element);
-		else {
-			if (theRoot.getInfo().compareTo(element) > 0) {
-
-				theRoot.setLeft(addRec(theRoot.getLeft(), element));
-			} else if (theRoot.getInfo().compareTo(element) < 0) {
-
-				theRoot.setRight(addRec(theRoot.getRight(), element));
-			} else {
-				theRoot.setInfo(element);
-			}
-
-			return (updateAndBalanceIfNecesary(theRoot));
+		else if (theRoot.getInfo().compareTo(element) == 0) {
+			theRoot.setInfo(element);
+		} else if (theRoot.getInfo().compareTo(element) > 0) {
+			theRoot.setLeft(addRec(theRoot.getLeft(), element));
+		} else if (theRoot.getInfo().compareTo(element) < 0) {
+			theRoot.setRight(addRec(theRoot.getRight(), element));
 		}
+		return (updateTree(theRoot));
 	}
-	
+
 	/**
 	 * Perform the necessary rotations in the tree
+	 * 
 	 * @param theRoot
 	 * @return the new root
 	 */
-	private AVLNode<T> updateAndBalanceIfNecesary(AVLNode<T> theRoot) {
+	private AVLNode<T> updateTree(AVLNode<T> theRoot) {
 		theRoot.setFactorBalanceAltura();
 		if (theRoot.getBF() == -2) {
 			if (theRoot.getLeft().getBF() == -1)
@@ -79,10 +73,160 @@ public class AVLTree<T extends Comparable<T>> {
 		theRoot.setFactorBalanceAltura();
 		return (theRoot);
 	}
-	
-	
+
 	/**
-	 *	Method that performs a simple rotation to the left
+	 * Looks for the node that is indicated
+	 * 
+	 * @param element,
+	 *            searched node
+	 * @return searched node if it find it, null otherwise
+	 */
+	public AVLNode<T> findNode(T element) {
+		ascendiente = null;
+		if (element != null) {
+			if (raiz == element) {
+				return raiz;
+			} else {
+				return findNodeRec(raiz, element);
+			}
+
+		}
+		return null;
+	}
+
+	/**
+	 * Looks for the node that is indicated from a origin node
+	 * 
+	 * @param source,
+	 *            origin node
+	 * @param element,
+	 *            searched node
+	 * @return searched node if it find it, null otherwise
+	 */
+	public AVLNode<T> findNodeFromOtherNode(T source, T element) {
+		if (element != null && source != null) {
+			AVLNode<T> theRoot = findNode(source);
+			numAristas = 0;
+			camino="";
+			if (theRoot != null) {
+				if (theRoot == element) {
+					return raiz;
+				} else {
+					return findNodeRec(theRoot, element);
+				}
+			}
+		}
+		return null;
+	}
+
+	private AVLNode<T> findNodeRec(AVLNode<T> theRoot, T element) {
+		if (theRoot == null) {
+			return null;
+		} else if (theRoot.getInfo().compareTo(element) > 0) {
+			numAristas++;
+			camino+=theRoot.toString()+"\t";
+			ascendiente = theRoot;
+			return findNodeRec(theRoot.getLeft(), element);
+		} else if (theRoot.getInfo().compareTo(element) < 0) {
+			numAristas++;
+			camino+=theRoot.toString()+"\t";
+			ascendiente = theRoot;
+			return findNodeRec(theRoot.getRight(), element);
+		} else if (theRoot.getInfo().compareTo(element) == 0) {
+			camino+=theRoot.toString()+"\t";
+			return theRoot;
+		}
+		return null;
+	}
+
+	/**
+	 * Removes a node from the tree
+	 * 
+	 * @param info,
+	 *            the node that you want to remove
+	 * @return the node that is erased
+	 */
+	public AVLNode<T> removeNode(T info) {
+		if (info == null)
+			return null;
+		else
+			try {
+				raiz = removeNodeRec(raiz, info);
+			} catch (RuntimeException e) {
+				return null;
+			}
+		return raiz;
+	}
+
+	private AVLNode<T> removeNodeRec(AVLNode<T> theRoot, T info) {
+		if (theRoot == null)
+			throw new RuntimeException("El elemento no existe");
+		else if (info.compareTo(theRoot.getInfo()) < 0)
+			theRoot.setLeft(removeNodeRec(theRoot.getLeft(), info));
+		else if (info.compareTo(theRoot.getInfo()) > 0)
+			theRoot.setRight(removeNodeRec(theRoot.getRight(), info));
+		else {
+			if (theRoot.getLeft() == null)
+				return theRoot.getRight();
+			else {
+				if (theRoot.getRight() == null)
+					return theRoot.getLeft();
+				else
+					theRoot.setInfo(getMax(theRoot.getLeft()));
+				theRoot.setLeft(removeNodeRec(theRoot.getLeft(), theRoot.getInfo()));
+			}
+		}
+		return (updateTree(theRoot));
+	}
+
+	/**
+	 * Returns if one node is direct ancestor of another
+	 * 
+	 * @param padre
+	 * @param hijo
+	 * @return true if it´s direct ancestor, false otherwise
+	 */
+	public boolean esAscendienteDirecto(T padre, T hijo) {
+		if (padre != null && hijo != null) {
+			findNode(hijo);
+			return ascendiente.getInfo() == padre;
+		}
+		return false;
+	}
+
+	/**
+	 * Returns the number of edges between one node and another. The origin node
+	 * must always be over the destination node
+	 * 
+	 * @param a
+	 * @param b
+	 * @return number of edges between one node and another, 0 if the origin node
+	 *         it´s not over the destination node or if the parameters are incorrect
+	 */
+	public int nunAristas(T a, T b) {
+		if (a != null && b != null) {
+			if (findNodeFromOtherNode(a, b) != null) {
+				return numAristas;
+			} else {
+				return 0;
+			}
+		}
+		return 0;
+	}
+
+	public String camino(T a, T b) {
+		if (a != null && b != null) {
+			if (findNodeFromOtherNode(a, b) != null) {
+				return camino;
+			} else {
+				return "No existe camino";
+			}
+		}
+		return "No existe camino"; 
+	}
+
+	/**
+	 * Method that performs a simple rotation to the left
 	 * 
 	 * @param node
 	 * @return the new root
@@ -97,7 +241,7 @@ public class AVLTree<T extends Comparable<T>> {
 	}
 
 	/**
-	 *	Method that performs a double rotation to the left
+	 * Method that performs a double rotation to the left
 	 * 
 	 * @param node
 	 * @return the new root
@@ -111,15 +255,15 @@ public class AVLTree<T extends Comparable<T>> {
 		aux1.setRight(node);
 		node = aux1;
 
-		updateAndBalanceIfNecesary(node.getRight());
-		updateAndBalanceIfNecesary(node.getLeft());
+		updateTree(node.getRight());
+		updateTree(node.getLeft());
 
 		return node;
 
 	}
 
 	/**
-	 *	Method that performs a simple rotation to the right
+	 * Method that performs a simple rotation to the right
 	 * 
 	 * @param node
 	 * @return the new root
@@ -134,7 +278,7 @@ public class AVLTree<T extends Comparable<T>> {
 	}
 
 	/**
-	 *	Method that performs a double rotation to the right
+	 * Method that performs a double rotation to the right
 	 * 
 	 * @param node
 	 * @return the new root
@@ -148,11 +292,88 @@ public class AVLTree<T extends Comparable<T>> {
 		aux1.setLeft(node);
 		node = aux1;
 
-		updateAndBalanceIfNecesary(node.getRight());
-		updateAndBalanceIfNecesary(node.getLeft());
+		updateTree(node.getRight());
+		updateTree(node.getLeft());
 
 		return node;
 	}
-	
-	
+
+	/**
+	 * @return the root
+	 */
+	public AVLNode<T> getRaiz() {
+		return raiz;
+	}
+
+	/**
+	 * @return info of the root
+	 */
+	public T getInfoRaiz() {
+		return raiz.getInfo();
+	}
+
+	private T getMax(AVLNode<T> theRoot) {
+		if (theRoot == null)
+			return null;
+		else if (theRoot.getRight() == null)
+			return theRoot.getInfo();
+		else
+			return getMax(theRoot.getRight());
+	}
+
+	/**
+	 * @return the route in pre-order
+	 */
+	public String preOrder() {
+		return preOrderRec(raiz).substring(0, preOrderRec(raiz).length() - 1);
+
+	}
+
+	private String preOrderRec(AVLNode<T> theRoot) {
+		String pre = "";
+		if (theRoot != null) {
+			pre += theRoot.toString() + "\t";
+			pre += preOrderRec(theRoot.getLeft());
+			pre += preOrderRec(theRoot.getRight());
+
+		}
+		return pre;
+	}
+
+	/**
+	 * @return the route in post-order
+	 */
+	public String postOrder() {
+		return postOrderRec(raiz).substring(0, postOrderRec(raiz).length() - 1);
+	}
+
+	private String postOrderRec(AVLNode<T> theRoot) {
+		String post = "";
+		if (theRoot != null) {
+			post += postOrderRec(theRoot.getLeft());
+			post += postOrderRec(theRoot.getRight());
+			post += theRoot.toString() + "\t";
+
+		}
+		return post;
+	}
+
+	/**
+	 * @return the route in in-order
+	 */
+	public String inOrder() {
+		return inOrderRec(raiz).substring(0, inOrderRec(raiz).length() - 1);
+	}
+
+	private String inOrderRec(AVLNode<T> theRoot) {
+		String in = "";
+		if (theRoot != null) {
+			in += inOrderRec(theRoot.getLeft());
+			in += theRoot.toString() + "\t";
+			in += inOrderRec(theRoot.getRight());
+
+		}
+		return in;
+	}
+
 }
