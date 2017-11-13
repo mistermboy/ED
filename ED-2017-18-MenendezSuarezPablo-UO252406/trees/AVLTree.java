@@ -214,6 +214,13 @@ public class AVLTree<T extends Comparable<T>> {
 		return 0;
 	}
 
+	/**
+	 * Returns the path from one node to another.The origin node
+	 * must always be over the destination node
+	 * @param a, origin node
+	 * @param b, destination node
+	 * @return the path if it exist, "No existe camino" otherwise
+	 */
 	public String camino(T a, T b) {
 		if (a != null && b != null) {
 			if (findNodeFromOtherNode(a, b) != null) {
