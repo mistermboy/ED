@@ -1,4 +1,4 @@
-package graphTest;
+package graphs.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

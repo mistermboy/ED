@@ -4,9 +4,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import treeTest.AVLTest;
-import treeTest.ArbolesBinariosBoolTestCharo;
-import treeTest.BSTest;
+import trees.test.AVLTest;
+import trees.test.ArbolesBinariosBoolTestCharo;
+import trees.test.BSTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({  ArbolesBinariosBoolTestCharo.class, BSTest.class, AVLTest.class })
