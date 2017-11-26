@@ -34,8 +34,7 @@ public class BinaryHeapTest {
 		assertTrue(tree.add(-20));
 		assertTrue(tree.add(-17));
 
-	//	 System.out.println(tree.toString());
-		 
+		// System.out.println(tree.toString());
 
 		// Añadir null
 		assertFalse(tree.add(null));
@@ -91,7 +90,7 @@ public class BinaryHeapTest {
 
 		// System.out.println(tree.toString());
 	}
-	
+
 	/**
 	 * Pruebas para el método remove
 	 */
@@ -208,8 +207,7 @@ public class BinaryHeapTest {
 		assertEquals(true, tree.isEmpty());
 
 	}
-	
-	
+
 	@Test
 	public void hijoMenorTest() {
 
@@ -225,16 +223,21 @@ public class BinaryHeapTest {
 		assertTrue(tree.add(8));
 
 		System.out.println(tree.toString());
-		
-		//Cuando el hijo menor es el derecho
-		assertEquals(2,tree.hijomenor(0));
-		//Cuando el hijo menor es el hizquierdo
-		assertEquals(3,tree.hijomenor(1));
-		
-		//Cuando solo tiene un hijo
-		assertEquals(7,tree.hijomenor(3));
+
+		// Cuando el hijo menor es el derecho
+		assertEquals(2, tree.hijomenor(0));
+		// Cuando el hijo menor es el hizquierdo
+		assertEquals(3, tree.hijomenor(1));
+
+		// Cuando solo tiene un hijo
+		assertEquals(7, tree.hijomenor(3));
+
+		// Cuando no tiene hijos
+		assertEquals(-1, tree.hijomenor(7));
+
+		// negativo
+		assertEquals(-1, tree.hijomenor(-6));
 
 	}
-
 
 }

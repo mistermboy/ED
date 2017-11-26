@@ -142,36 +142,14 @@ public class BinaryHeap<T extends Comparable<T>> implements PriorityQueue<T> {
 		this.numElements = 0;
 	}
 
-	// @Override
-	// public String toString() {
-	// String cad = "";
-	// for (int i = 0; i < numElements - 1; i++) {
-	// cad += monticulo[i] + ",";
-	// }
-	// cad += monticulo[numElements - 1];
-	// return cad;
-	// }
-
+	@Override
 	public String toString() {
-		// Por ejemplo el árbol tumbado...
-		StringBuilder cadena = new StringBuilder();
-		cadena.append(inOrdenDerechaTabulado(0, 0));
-		return cadena.toString();
-	}
-
-	// el árbol tumbado...
-	private String inOrdenDerechaTabulado(int p, int esp) {
-		String cadena = "";
-		if (p < numElements) {
-			int izq = Math.abs(2 * p + 1);
-			int der = Math.abs(2 * p + 2);
-			cadena += inOrdenDerechaTabulado(der, esp + 1);
-			for (int i = 0; i < esp; i++)
-				cadena += "\t";
-			cadena += monticulo[p] + "\n";
-			cadena += inOrdenDerechaTabulado(izq, esp + 1);
+		String cad = "";
+		for (int i = 0; i < numElements - 1; i++) {
+			cad += monticulo[i] + ",";
 		}
-		return cadena;
+		cad += monticulo[numElements - 1];
+		return cad;
 	}
 
 	/**
@@ -187,31 +165,22 @@ public class BinaryHeap<T extends Comparable<T>> implements PriorityQueue<T> {
 			int hIzquierdo = (pos * 2) + 1;
 			int hDerecho = (pos * 2) + 2;
 
-			if (hIzquierdo <= numElements && hDerecho <= numElements) {
+			if (hIzquierdo <= numElements - 1) {
 
-//				if (monticulo[hIzquierdo] == null && monticulo[hDerecho] == null) {
-//					return -1;
-//				} else if (monticulo[hIzquierdo] == null) {
-//					return hDerecho;
-//				} else if (monticulo[hDerecho] == null) {
-//					return hIzquierdo;
-//				} else if (monticulo[hIzquierdo].compareTo(monticulo[hDerecho]) < 0) {
-//					return hIzquierdo;
-//				} else {
-//					return hDerecho;
-//				}
-				
-				if(monticulo[hIzquierdo] == null) {
+				if (monticulo[hIzquierdo] == null) {
 					return -1;
-				}else {
-					if (monticulo[hIzquierdo].compareTo(monticulo[hDerecho]) < 0) {
-						return hIzquierdo;
-					} else {
-						return hDerecho;
+				} else {
+
+					if (hDerecho <= numElements - 1) {
+						if (monticulo[hIzquierdo].compareTo(monticulo[hDerecho]) < 0) {
+							return hIzquierdo;
+						} else {
+							return hDerecho;
+						}
 					}
+					return hIzquierdo;
 				}
-				
-				
+
 			}
 		}
 		return -1;
@@ -224,7 +193,9 @@ public class BinaryHeap<T extends Comparable<T>> implements PriorityQueue<T> {
 	 * @param pos2
 	 */
 	private void intercambia(int pos1, int pos2) {
-
+		T save = monticulo[pos2];
+		monticulo[pos2] = monticulo[pos1];
+		monticulo[pos1] = save;
 	}
 
 	/**
@@ -252,9 +223,12 @@ public class BinaryHeap<T extends Comparable<T>> implements PriorityQueue<T> {
 	 * @return
 	 */
 	private int find2(T info, int pos) {
-		for (int i = 0; i < numElements; i++)
-			if (monticulo[i].equals(info))
-				return i;
+		if (info != null && pos >= 0) {
+			for (int i = 0; i < numElements; i++)
+				if (monticulo[i].equals(info))
+					return i;
+
+		}
 		return -1;
 	}
 
