@@ -88,7 +88,7 @@ public class ClosedHashTable<T extends Comparable<T>> extends AbstractHash<T> {
 				int aux = 0; // iteración
 				int posicion = fHash(elem, 0);
 
-				while (tabla[posicion].getEstado() == HashNode.LLENO) {
+				while (tabla[posicion].getEstado() == HashNode.LLENO && aux <= getB()) {
 					posicion = fHash(elem, aux);
 					aux++;
 				}
@@ -258,6 +258,10 @@ public class ClosedHashTable<T extends Comparable<T>> extends AbstractHash<T> {
 
 	public int getNumElementos() {
 		return numElementos;
+	}
+
+	public int getSize() {
+		return tabla.length;
 	}
 
 }
