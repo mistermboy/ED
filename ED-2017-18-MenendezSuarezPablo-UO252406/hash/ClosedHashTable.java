@@ -2,8 +2,6 @@ package hash;
 
 import java.lang.reflect.Array;
 
-import sun.security.action.GetBooleanAction;
-
 public class ClosedHashTable<T extends Comparable<T>> extends AbstractHash<T> {
 
 	private int numElementos;
@@ -17,6 +15,9 @@ public class ClosedHashTable<T extends Comparable<T>> extends AbstractHash<T> {
 	public static final double MINIMUN_LF = 0.16;
 	public static final double MAXIMUN_LF = 0.5;
 	public static final int TIPO_EXPLORACION = 2;
+
+	private int numRedis; // número de redispersiones
+	private int numInvers; // número de redispersiones inversas
 
 	@SuppressWarnings("unchecked")
 	/**
@@ -88,7 +89,7 @@ public class ClosedHashTable<T extends Comparable<T>> extends AbstractHash<T> {
 				int aux = 0; // iteración
 				int posicion = fHash(elem, 0);
 
-				while (tabla[posicion].getEstado() == HashNode.LLENO && aux <= getB()) {
+				while (tabla[posicion].getEstado() == HashNode.LLENO) {
 					posicion = fHash(elem, aux);
 					aux++;
 				}
@@ -97,7 +98,7 @@ public class ClosedHashTable<T extends Comparable<T>> extends AbstractHash<T> {
 
 				if (loadFactor() > maxlf) {
 					reDispersion();
-					// numRedis++;
+					numRedis++;
 				}
 
 				return true;
@@ -146,7 +147,7 @@ public class ClosedHashTable<T extends Comparable<T>> extends AbstractHash<T> {
 						if (numElementos != 0) {
 							if (loadFactor() < minlf) {
 								inverseReDispersion();
-								// numInvers++;
+								numInvers++;
 							}
 						}
 						return true;
@@ -262,6 +263,22 @@ public class ClosedHashTable<T extends Comparable<T>> extends AbstractHash<T> {
 
 	public int getSize() {
 		return tabla.length;
+	}
+
+	public int getNumRedis() {
+		return numRedis;
+	}
+
+	public void setNumRedis(int numRedis) {
+		this.numRedis = numRedis;
+	}
+
+	public int getNumInvers() {
+		return numInvers;
+	}
+
+	public void setNumInvers(int numInvers) {
+		this.numInvers = numInvers;
 	}
 
 }
