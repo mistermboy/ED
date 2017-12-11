@@ -1,5 +1,8 @@
 package trees;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AVLTree<T extends Comparable<T>> {
 
 	private AVLNode<T> raiz;
@@ -107,7 +110,7 @@ public class AVLTree<T extends Comparable<T>> {
 		if (element != null && source != null) {
 			AVLNode<T> theRoot = findNode(source);
 			numAristas = 0;
-			camino="";
+			camino = "";
 			if (theRoot != null) {
 				if (theRoot == element) {
 					return raiz;
@@ -124,16 +127,16 @@ public class AVLTree<T extends Comparable<T>> {
 			return null;
 		} else if (theRoot.getInfo().compareTo(element) > 0) {
 			numAristas++;
-			camino+=theRoot.toString()+"\t";
+			camino += theRoot.toString() + "\t";
 			ascendiente = theRoot;
 			return findNodeRec(theRoot.getLeft(), element);
 		} else if (theRoot.getInfo().compareTo(element) < 0) {
 			numAristas++;
-			camino+=theRoot.toString()+"\t";
+			camino += theRoot.toString() + "\t";
 			ascendiente = theRoot;
 			return findNodeRec(theRoot.getRight(), element);
 		} else if (theRoot.getInfo().compareTo(element) == 0) {
-			camino+=theRoot.toString()+"\t";
+			camino += theRoot.toString() + "\t";
 			return theRoot;
 		}
 		return null;
@@ -215,10 +218,13 @@ public class AVLTree<T extends Comparable<T>> {
 	}
 
 	/**
-	 * Returns the path from one node to another.The origin node
-	 * must always be over the destination node
-	 * @param a, origin node
-	 * @param b, destination node
+	 * Returns the path from one node to another.The origin node must always be over
+	 * the destination node
+	 * 
+	 * @param a,
+	 *            origin node
+	 * @param b,
+	 *            destination node
 	 * @return the path if it exist, "No existe camino" otherwise
 	 */
 	public String camino(T a, T b) {
@@ -229,7 +235,7 @@ public class AVLTree<T extends Comparable<T>> {
 				return "No existe camino";
 			}
 		}
-		return "No existe camino"; 
+		return "No existe camino";
 	}
 
 	/**
@@ -381,6 +387,83 @@ public class AVLTree<T extends Comparable<T>> {
 
 		}
 		return in;
+	}
+
+	
+	// ~################################################  Posibles métodos de examen   ##################################################
+	
+	public AVLTree<T> clone() {
+		AVLTree<T> copy = new AVLTree<T>();
+		return clone(copy, this.getRaiz());
+	}
+
+	private AVLTree<T> clone(AVLTree<T> tree, AVLNode<T> root) {
+		if (root != null) {
+			tree.add(root.getInfo());
+			clone(tree, root.getLeft());
+			clone(tree, root.getRight());
+		}
+		return tree;
+	}
+
+	public AVLNode<T> join(AVLNode<T> tree) {
+		if (tree != null) {
+			AVLTree<T> joinTree = this.clone();
+			return join(joinTree.getRaiz(), tree);
+		}
+		return null;
+
+	}
+
+	private AVLNode<T> join(AVLNode<T> theRoot1, AVLNode<T> theRoot2) {
+		if (theRoot2 != null) {
+			add(theRoot2.getInfo());
+			join(theRoot1, theRoot2.getLeft());
+			join(theRoot1, theRoot2.getRight());
+		}
+		return theRoot1;
+
+	}
+
+	public List<T> toList(AVLNode<T> tree) {
+		List<T> list = new ArrayList<T>();
+		return toList(tree, list);
+	}
+
+	private List<T> toList(AVLNode<T> root, List<T> list) {
+		if (root != null) {
+			list.add(root.getInfo());
+			toList(root.getLeft(), list);
+			toList(root.getRight(), list);
+		}
+		return list;
+	}
+
+	private boolean isInList(List<T> list, T element) {
+		for (T t : list) {
+			if (t == element) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public AVLNode<T> difference(AVLNode<T> secondTree) {
+		List<T> list1 = toList(this.raiz);
+		List<T> list2 = toList(secondTree);
+		AVLTree<T> diferent = new AVLTree<T>();
+		for (T t : list1) {
+			if (!isInList(list2, t)) {
+				diferent.add(t);
+			}
+		}
+		for (T t : list2) {
+			if (!isInList(list1, t)) {
+				diferent.add(t);
+			}
+
+		}
+		return diferent.getRaiz();
 	}
 
 }
